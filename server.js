@@ -3,11 +3,10 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-const AnthropicModule = require('@anthropic-ai/sdk');
-const Anthropic = AnthropicModule.default || AnthropicModule.Anthropic || AnthropicModule;
-
 const app = express();
 const PORT = process.env.PORT || 3000;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
 app.use(cors());
 app.use(express.json({ limit: '1mb' }));
@@ -24,15 +23,13 @@ Rules:
 - When a student is wrong, correct them directly but briefly.
 - End with one short checkpoint question when useful.`;
 
-const client = process.env.ANTHROPIC_API_KEY
-  ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
-  : null;
-
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     app: 'Ecomath',
-    aiConfigured: Boolean(process.env.ANTHROPIC_API_KEY)
+    provider: 'OpenAI',
+    aiConfigured: Boolean(OPENAI_API_KEY),
+    model: OPENAI_MODEL
   });
 });
 
@@ -44,49 +41,47 @@ app.post('/api/ask', async (req, res) => {
       return res.status(400).json({ error: 'Please enter a question.' });
     }
 
-    if (!client) {
+    if (!OPENAI_API_KEY) {
       return res.status(500).json({
-        error: 'ANTHROPIC_API_KEY is not set on the server.'
+        error: 'OPENAI_API_KEY is not set on the server.'
       });
     }
 
-    const response = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1200,
-      system: TUTOR_SYSTEM_PROMPT,
-      messages: [
-        {
-          role: 'user',
-          content: question
-        }
-      ]
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${OPENAI_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        messages: [
+          { role: 'system', content: TUTOR_SYSTEM_PROMPT },
+          { role: 'user', content: question }
+        ],
+        temperature: 0.4,
+        max_tokens: 1200
+      })
     });
 
-    const answer = Array.isArray(response.content)
-      ? response.content
-          .filter(item => item.type === 'text')
-          .map(item => item.text)
-          .join('\n\n')
-          .trim()
-      : '';
+    const data = await response.json();
+
+    if (!response.ok) {
+      return res.status(response.status).json({
+        error: data?.error?.message || 'Failed to get a response from OpenAI.'
+      });
+    }
+
+    const answer = data?.choices?.[0]?.message?.content?.trim() || 'No answer was generated.';
 
     return res.json({
       success: true,
-      answer: answer || 'No answer was generated.'
+      answer
     });
   } catch (error) {
-    console.error('API error:', error);
-
-    if (error?.status === 401) {
-      return res.status(401).json({ error: 'Authentication failed. Check your API key.' });
-    }
-
-    if (error?.status === 429) {
-      return res.status(429).json({ error: 'Rate limit reached. Try again in a moment.' });
-    }
-
+    console.error('OpenAI error:', error);
     return res.status(500).json({
-      error: error?.message || 'Something went wrong while contacting the AI service.'
+      error: error?.message || 'Something went wrong while contacting OpenAI.'
     });
   }
 });
