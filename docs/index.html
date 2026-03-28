@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ecomath | UG Math in Economics Study App</title>
+  <style>
+    :root {
+      --bg: #08111f;
+      --panel: #0f1b2d;
+      --card: #12233a;
+      --text: #eef4ff;
+      --muted: #b5c3d9;
+      --accent: #f4b400;
+      --accent-2: #2563eb;
+      --good: #22c55e;
+      --border: #29405f;
+      --danger: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, var(--bg), #102440);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      padding: 28px 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(8, 17, 31, 0.9);
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(8px);
+      z-index: 20;
+    }
+    .wrap { width: min(1180px, 92%); margin: 0 auto; }
+    .brand { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .brand h1 { margin: 0; font-size: 1.9rem; line-height: 1.2; }
+    .brand p { margin: 8px 0 0; color: var(--muted); max-width: 760px; }
+    .badge { border: 1px solid var(--border); background: rgba(34, 197, 94, 0.12); color: #a7f3d0; padding: 10px 14px; border-radius: 999px; font-weight: 700; }
+    main { padding: 28px 0 48px; }
+    .grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 22px; }
+    .stack { display: grid; gap: 22px; }
+    .card { background: rgba(15, 27, 45, 0.92); border: 1px solid var(--border); border-radius: 18px; padding: 20px; box-shadow: 0 14px 40px rgba(0,0,0,0.22); }
+    .card h2 { margin-top: 0; font-size: 1.25rem; }
+    .sub { color: var(--muted); line-height: 1.5; margin-top: -2px; }
+    .topic-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 16px; }
+    .topic { border: 1px solid var(--border); background: var(--card); border-radius: 14px; padding: 14px; cursor: pointer; transition: transform 0.15s ease, border-color 0.15s ease; }
+    .topic:hover { transform: translateY(-2px); border-color: var(--accent); }
+    .topic h3 { margin: 0 0 8px; font-size: 1rem; }
+    .topic p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.45; }
+    .lesson-box { margin-top: 16px; border: 1px solid var(--border); background: #0a1627; border-radius: 14px; padding: 16px; min-height: 160px; line-height: 1.7; white-space: pre-wrap; }
+    .formula-list { display: grid; gap: 12px; margin-top: 14px; }
+    .formula { border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; background: var(--card); }
+    .formula strong { display: block; margin-bottom: 5px; color: #ffe08a; }
+    textarea, input { width: 100%; border: 1px solid var(--border); border-radius: 12px; background: #091321; color: var(--text); padding: 12px; font-size: 1rem; }
+    textarea { min-height: 120px; resize: vertical; }
+    button { border: none; padding: 12px 16px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+    .btn-primary { background: var(--accent); color: #2d2200; }
+    .btn-secondary { background: var(--accent-2); color: white; }
+    .btn-ghost { background: #233754; color: white; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .chat { border: 1px solid var(--border); background: #091321; border-radius: 14px; padding: 14px; min-height: 220px; max-height: 380px; overflow: auto; display: grid; gap: 12px; margin-top: 14px; }
+    .bubble { padding: 12px 14px; border-radius: 14px; line-height: 1.55; white-space: pre-wrap; }
+    .user { background: #17304d; border: 1px solid #264d79; }
+    .bot { background: #112437; border: 1px solid var(--border); }
+    .quiz-box { margin-top: 14px; border: 1px solid var(--border); border-radius: 14px; padding: 16px; background: #091321; }
+    .option-list { display: grid; gap: 10px; margin-top: 12px; }
+    .option { padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: #0e1d31; cursor: pointer; color: var(--text); text-align: left; }
+    .option.correct { border-color: var(--good); background: rgba(34, 197, 94, 0.12); }
+    .option.wrong { border-color: var(--danger); background: rgba(239, 68, 68, 0.12); }
+    .feedback { margin-top: 12px; color: var(--muted); line-height: 1.55; }
+    .planner-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 14px; }
+    .planner-item { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
+    .planner-item h4 { margin: 0 0 8px; color: #ffe08a; }
+    .footnote { margin-top: 10px; color: var(--muted); font-size: 0.92rem; }
+    @media (max-width: 920px) { .grid, .topic-grid, .planner-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap brand">
+      <div>
+        <h1>Ecomath<br />UG Elements of Mathematics in Economics</h1>
+        <p>A no-login, no-key study app for students. Read topic lessons, revise formulas, practice quizzes, and use the built-in study helper.</p>
+      </div>
+      <div class="badge">Works without API keys</div>
+    </div>
+  </header>
+  <main class="wrap">
+    <div class="grid">
+      <section class="stack">
+        <div class="card">
+          <h2>Topic lessons</h2>
+          <p class="sub">Tap a topic and get the beginner version first. Miracles do happen.</p>
+          <div class="topic-grid" id="topicGrid"></div>
+          <div class="lesson-box" id="lessonBox">Choose a topic to load a lesson.</div>
+        </div>
+        <div class="card">
+          <h2>Core formulas</h2>
+          <p class="sub">The formulas students always need and somehow still forget.</p>
+          <div class="formula-list" id="formulaList"></div>
+        </div>
+        <div class="card">
+          <h2>Quick quiz</h2>
+          <p class="sub">Answer and get the explanation immediately.</p>
+          <div class="quiz-box">
+            <div id="quizQuestion">Press “Next quiz” to begin.</div>
+            <div class="option-list" id="optionList"></div>
+            <div class="actions">
+              <button class="btn-secondary" onclick="loadQuiz()">Next quiz</button>
+            </div>
+            <div class="feedback" id="quizFeedback"></div>
+          </div>
+        </div>
+      </section>
+      <section class="stack">
+        <div class="card">
+          <h2>Study helper</h2>
+          <p class="sub">Ask simple questions like “Explain differentiation”, “How do I solve optimization?”, or “Teach me elasticity”.</p>
+          <textarea id="studentQuestion" placeholder="Type your question here..."></textarea>
+          <div class="actions">
+            <button class="btn-primary" onclick="answerQuestion()">Ask helper</button>
+            <button class="btn-ghost" onclick="useExamplePrompt()">Use sample prompt</button>
+          </div>
+          <div class="chat" id="chatBox">
+            <div class="bubble bot">Hello. I am your built-in study helper for Elements of Mathematics in Economics. I can explain topics simply, step by step, without needing any external AI account.</div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>7-day revision planner</h2>
+          <p class="sub">A realistic weekly revision structure for students who need order before panic wins.</p>
+          <div class="planner-grid" id="plannerGrid"></div>
+          <div class="footnote">Tip: study one topic, explain it in your own words, solve two questions, then correct your mistakes immediately.</div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script>
+    const topics = [
+      { title: 'Functions and graphs', short: 'Variables, domain, range, and graph shape.', lesson: `FUNCTIONS AND GRAPHS\n\nA function shows how one variable depends on another. In economics, quantity demanded may depend on price and cost may depend on output.\n\nKey idea:\nIf y = f(x), then x is the input and y is the output.\n\nFocus on:\n1. Identify dependent and independent variables\n2. Find domain and range\n3. Read slope from a graph\n4. Know whether the function is increasing or decreasing` },
+      { title: 'Linear and quadratic', short: 'Straight lines and parabolas used in economics.', lesson: `LINEAR AND QUADRATIC FUNCTIONS\n\nLinear: y = a + bx\nQuadratic: y = ax² + bx + c\n\nFor linear functions, interpret slope and intercept.\nFor quadratic functions, identify the turning point and whether the graph opens up or down.` },
+      { title: 'Differentiation', short: 'Rates of change and marginal concepts.', lesson: `DIFFERENTIATION\n\nDifferentiation tells you how fast a function changes. In economics, derivatives are used for marginal cost, marginal revenue, and marginal product.\n\nBasic rule:\nd/dx(x^n) = nx^(n-1)\n\nExample:\nIf C(x) = 5x² + 2x + 1, then C'(x) = 10x + 2.` },
+      { title: 'Partial derivatives', short: 'Differentiate multivariable functions one variable at a time.', lesson: `PARTIAL DERIVATIVES\n\nIf a function depends on more than one variable, use partial derivatives.\n\nExample:\nIf Q = 3K²L + 4L², then\n∂Q/∂K = 6KL\n∂Q/∂L = 3K² + 8L\n\nRule:\nTreat the other variables as constants.` },
+      { title: 'Optimization', short: 'Find maxima and minima for profit, cost, or utility.', lesson: `OPTIMIZATION\n\nStep by step:\n1. Write the function\n2. Differentiate it\n3. Set the derivative equal to zero\n4. Solve for the critical point\n5. Use the second derivative to decide max or min\n\nExample:\nIf π(x) = -x² + 10x - 9, then π'(x) = -2x + 10.\nSet equal to zero and solve.` },
+      { title: 'Elasticity basics', short: 'Measure responsiveness in economics.', lesson: `ELASTICITY BASICS\n\nElasticity measures how responsive one variable is to another.\n\nFormula:\nE = (dQ/dP)(P/Q)\n\nInterpretation:\n|E| > 1 means elastic\n|E| < 1 means inelastic\n|E| = 1 means unit elastic` }
+    ];
+
+    const formulas = [
+      { name: 'Linear function', text: 'y = a + bx' },
+      { name: 'Quadratic function', text: 'y = ax² + bx + c' },
+      { name: 'Power rule', text: 'd/dx(x^n) = nx^(n-1)' },
+      { name: 'Second derivative test', text: 'If f\'\'(x) < 0, local maximum. If f\'\'(x) > 0, local minimum.' },
+      { name: 'Marginal cost', text: 'MC = dC/dQ' },
+      { name: 'Marginal revenue', text: 'MR = dR/dQ' },
+      { name: 'Elasticity', text: 'E = (dQ/dP)(P/Q)' },
+      { name: 'Partial derivative idea', text: 'Differentiate with respect to one variable, hold others constant.' }
+    ];
+
+    const quizzes = [
+      { q: 'If y = 3x² + 2x, what is dy/dx?', options: ['6x + 2', '3x + 2', '6x', '2x + 2'], answer: 0, explain: 'Use the power rule. d/dx(3x²)=6x and d/dx(2x)=2, so the derivative is 6x + 2.' },
+      { q: 'If π(x) = -x² + 8x - 3, what type of turning point does it have?', options: ['Minimum', 'Maximum', 'Neither', 'Inflection point'], answer: 1, explain: 'The coefficient of x² is negative, so the parabola opens downward. That means the turning point is a maximum.' },
+      { q: 'What does a derivative represent in economics?', options: ['A total value only', 'A fixed constant always', 'A rate of change or marginal effect', 'A graph intercept'], answer: 2, explain: 'In economics, derivatives often represent marginal quantities such as marginal cost and marginal revenue.' },
+      { q: 'For Q = 4K²L, what is ∂Q/∂K?', options: ['8KL', '4K²', '8K²L', '4KL'], answer: 0, explain: 'Differentiate with respect to K and treat L as constant. ∂/∂K (4K²L) = 8KL.' }
+    ];
+
+    const planner = [
+      { day: 'Day 1', task: 'Functions, domain, range, and graph meaning' },
+      { day: 'Day 2', task: 'Linear and quadratic functions with worked examples' },
+      { day: 'Day 3', task: 'Differentiation rules and marginal interpretation' },
+      { day: 'Day 4', task: 'More differentiation practice and correction' },
+      { day: 'Day 5', task: 'Partial derivatives and production functions' },
+      { day: 'Day 6', task: 'Optimization and second derivative test' },
+      { day: 'Day 7', task: 'Elasticity revision and mixed-topic quiz' }
+    ];
+
+    function renderTopics() {
+      const topicGrid = document.getElementById('topicGrid');
+      topicGrid.innerHTML = '';
+      topics.forEach(topic => {
+        const box = document.createElement('div');
+        box.className = 'topic';
+        box.innerHTML = `<h3>${topic.title}</h3><p>${topic.short}</p>`;
+        box.onclick = () => document.getElementById('lessonBox').textContent = topic.lesson;
+        topicGrid.appendChild(box);
+      });
+    }
+
+    function renderFormulas() {
+      const list = document.getElementById('formulaList');
+      list.innerHTML = '';
+      formulas.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'formula';
+        div.innerHTML = `<strong>${item.name}</strong>${item.text}`;
+        list.appendChild(div);
+      });
+    }
+
+    function renderPlanner() {
+      const box = document.getElementById('plannerGrid');
+      box.innerHTML = '';
+      planner.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'planner-item';
+        div.innerHTML = `<h4>${item.day}</h4><div>${item.task}</div>`;
+        box.appendChild(div);
+      });
+    }
+
+    let currentQuiz = null;
+
+    function loadQuiz() {
+      currentQuiz = quizzes[Math.floor(Math.random() * quizzes.length)];
+      document.getElementById('quizQuestion').textContent = currentQuiz.q;
+      document.getElementById('quizFeedback').textContent = '';
+      const optionList = document.getElementById('optionList');
+      optionList.innerHTML = '';
+      currentQuiz.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = option;
+        btn.onclick = () => markQuiz(index);
+        optionList.appendChild(btn);
+      });
+    }
+
+    function markQuiz(index) {
+      const buttons = document.querySelectorAll('.option');
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === currentQuiz.answer) btn.classList.add('correct');
+        if (i === index && i !== currentQuiz.answer) btn.classList.add('wrong');
+      });
+      const status = index === currentQuiz.answer ? 'Correct. ' : 'Not correct. ';
+      document.getElementById('quizFeedback').textContent = status + currentQuiz.explain;
+    }
+
+    function addBubble(text, type) {
+      const bubble = document.createElement('div');
+      bubble.className = `bubble ${type}`;
+      bubble.textContent = text;
+      const chatBox = document.getElementById('chatBox');
+      chatBox.appendChild(bubble);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function useExamplePrompt() {
+      document.getElementById('studentQuestion').value = 'Teach me optimization step by step with a simple economics example.';
+    }
+
+    function answerQuestion() {
+      const input = document.getElementById('studentQuestion');
+      const question = input.value.trim();
+      if (!question) return;
+      addBubble(question, 'user');
+      const q = question.toLowerCase();
+      let response = '';
+      if (q.includes('differentiat') || q.includes('derivative')) {
+        response = `DIFFERENTIATION HELP\n\nStep 1: Identify the function.\nStep 2: Apply the correct rule.\nStep 3: Simplify the result.\n\nExample:\nIf y = 4x^3 + 2x, then dy/dx = 12x^2 + 2.\n\nIn economics, the derivative often means a marginal change. So if C(Q) is cost, then C'(Q) is marginal cost.`;
+      } else if (q.includes('optimiz') || q.includes('maximum') || q.includes('minimum')) {
+        response = `OPTIMIZATION HELP\n\nUse this structure:\n1. Write the objective function.\n2. Differentiate it.\n3. Set the derivative equal to zero.\n4. Solve for the critical value.\n5. Check the second derivative.\n\nExample:\nπ(x) = -x^2 + 8x - 3\nπ'(x) = -2x + 8\nSet equal to zero: -2x + 8 = 0, so x = 4\nπ''(x) = -2, which is negative, so x = 4 gives a maximum.`;
+      } else if (q.includes('partial')) {
+        response = `PARTIAL DERIVATIVE HELP\n\nA partial derivative means differentiate with respect to one variable while keeping the others constant.\n\nExample:\nQ = 5K^2L + 2L\n∂Q/∂K = 10KL\n∂Q/∂L = 5K^2 + 2\n\nDo not differentiate both variables at once.`;
+      } else if (q.includes('elasticity')) {
+        response = `ELASTICITY HELP\n\nElasticity measures responsiveness.\n\nFormula:\nE = (dQ/dP)(P/Q)\n\nInterpretation:\nIf |E| > 1, demand is elastic.\nIf |E| < 1, demand is inelastic.\nIf |E| = 1, demand is unit elastic.`;
+      } else if (q.includes('function') || q.includes('graph')) {
+        response = `FUNCTIONS AND GRAPHS HELP\n\nA function links one variable to another.\nFor y = f(x), x is the input and y is the output.\n\nCheck these things:\n1. What is the independent variable?\n2. What is the dependent variable?\n3. Is the graph increasing or decreasing?\n4. What does the slope mean?`;
+      } else {
+        response = `GENERAL STUDY HELP\n\nTry this method:\n1. Write the topic name.\n2. State the main formula.\n3. Explain the meaning in plain English.\n4. Solve one worked example.\n5. Check where you made mistakes.\n\nYou can ask me about differentiation, optimization, partial derivatives, functions, graphs, or elasticity.`;
+      }
+      addBubble(response, 'bot');
+      input.value = '';
+    }
+
+    renderTopics();
+    renderFormulas();
+    renderPlanner();
+    loadQuiz();
+  </script>
+</body>
+</html>
