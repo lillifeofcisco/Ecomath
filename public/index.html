@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ecomath</title>
+  <style>
+    :root {
+      --bg: #08111f;
+      --card: #12233a;
+      --panel: #0f1b2d;
+      --text: #eef4ff;
+      --muted: #b5c3d9;
+      --accent: #f4b400;
+      --accent2: #2563eb;
+      --border: #29405f;
+      --good: #22c55e;
+      --bad: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, var(--bg), #102440);
+      color: var(--text);
+    }
+    .wrap {
+      width: min(1180px, 92%);
+      margin: 0 auto;
+    }
+    header {
+      padding: 24px 0 18px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    h1 { margin: 0 0 8px; font-size: 1.8rem; }
+    .subhead { margin: 0; color: var(--muted); line-height: 1.5; }
+    .badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(244,180,0,0.12);
+      color: #ffe08a;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+      padding-bottom: 40px;
+    }
+    .stack { display: grid; gap: 18px; }
+    .card {
+      background: rgba(15, 27, 45, 0.94);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .card h2 { margin-top: 0; }
+    .hint { color: var(--muted); line-height: 1.5; margin-top: -4px; }
+    .topic-grid, .planner-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .topic, .planner-item, .formula {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .topic { cursor: pointer; }
+    .topic:hover { border-color: var(--accent); }
+    .topic h3, .planner-item h4 { margin: 0 0 6px; }
+    .topic p, .planner-item p, .formula p { margin: 0; color: var(--muted); line-height: 1.4; }
+    .lesson-box, .chat {
+      margin-top: 12px;
+      border: 1px solid var(--border);
+      background: #091321;
+      border-radius: 12px;
+      padding: 12px;
+      white-space: pre-wrap;
+    }
+    .lesson-box { min-height: 160px; line-height: 1.6; }
+    .formula-list { display: grid; gap: 10px; margin-top: 12px; }
+    .formula strong { display: block; margin-bottom: 4px; color: #ffe08a; }
+    textarea {
+      width: 100%; min-height: 110px; resize: vertical;
+      border: 1px solid var(--border); border-radius: 12px;
+      background: #091321; color: var(--text); padding: 12px;
+      font: inherit;
+    }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    button {
+      border: none; border-radius: 10px; padding: 11px 15px;
+      font-weight: 700; cursor: pointer;
+    }
+    .primary { background: var(--accent); color: #2d2200; }
+    .secondary { background: var(--accent2); color: white; }
+    .ghost { background: #233754; color: white; }
+    .chat { min-height: 240px; max-height: 420px; overflow: auto; display: grid; gap: 10px; }
+    .bubble {
+      padding: 11px 12px; border-radius: 12px; line-height: 1.55;
+      white-space: pre-wrap;
+    }
+    .user { background: #17304d; border: 1px solid #264d79; }
+    .bot { background: #112437; border: 1px solid var(--border); }
+    .status { color: var(--muted); font-size: 0.92rem; margin-top: 10px; }
+    .quiz-box {
+      margin-top: 12px; border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px; background: #091321;
+    }
+    .option-list { display: grid; gap: 8px; margin-top: 10px; }
+    .option {
+      text-align: left; background: #0e1d31; color: var(--text);
+      border: 1px solid var(--border); border-radius: 10px; padding: 10px;
+    }
+    .option.correct { border-color: var(--good); background: rgba(34,197,94,0.12); }
+    .option.wrong { border-color: var(--bad); background: rgba(239,68,68,0.12); }
+    .feedback { margin-top: 10px; color: var(--muted); line-height: 1.5; }
+    @media (max-width: 920px) {
+      .grid, .topic-grid, .planner-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Ecomath</h1>
+      <p class="subhead">AI study assistant for University of Ghana students learning Elements of Mathematics in Economics.</p>
+      <div class="badge">Functions • Differentiation • Optimization • Elasticity</div>
+    </header>
+
+    <main class="grid">
+      <section class="stack">
+        <div class="card">
+          <h2>Topic lessons</h2>
+          <p class="hint">Choose a topic and load a simple explanation before you go and make life harder than necessary.</p>
+          <div class="topic-grid" id="topicGrid"></div>
+          <div class="lesson-box" id="lessonBox">Pick a topic to begin.</div>
+        </div>
+
+        <div class="card">
+          <h2>Core formulas</h2>
+          <p class="hint">A clean formula list for quick revision.</p>
+          <div class="formula-list" id="formulaList"></div>
+        </div>
+
+        <div class="card">
+          <h2>Quick quiz</h2>
+          <p class="hint">Test understanding with short multiple-choice questions.</p>
+          <div class="quiz-box">
+            <div id="quizQuestion">Press “Next quiz” to begin.</div>
+            <div class="option-list" id="optionList"></div>
+            <div class="actions">
+              <button class="secondary" onclick="loadQuiz()">Next quiz</button>
+            </div>
+            <div class="feedback" id="quizFeedback"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stack">
+        <div class="card">
+          <h2>Ask the AI tutor</h2>
+          <p class="hint">Ask for explanations, worked steps, or corrections.</p>
+          <textarea id="question" placeholder="Example: Explain marginal cost simply and solve C(x)=5x²+2x+1."></textarea>
+          <div class="actions">
+            <button class="primary" id="askBtn" onclick="askTutor()">Ask assistant</button>
+            <button class="ghost" onclick="samplePrompt()">Use sample prompt</button>
+          </div>
+          <div class="status" id="statusText">Server status not checked yet.</div>
+          <div class="chat" id="chatBox">
+            <div class="bubble bot">Hello. Ask me a math or economics question and I will explain it step by step.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>7-day revision planner</h2>
+          <p class="hint">A basic study rhythm for students who need structure.</p>
+          <div class="planner-grid" id="plannerGrid"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const topics = [
+      {
+        title: 'Functions and graphs',
+        short: 'Inputs, outputs, domain, range, and graph meaning.',
+        lesson: `FUNCTIONS AND GRAPHS\n\nA function connects an input to an output. If y = f(x), then x is the input and y is the output.\n\nFocus on:\n1. independent and dependent variables\n2. domain and range\n3. slope and direction\n4. graph interpretation in economics`
+      },
+      {
+        title: 'Linear and quadratic',
+        short: 'Straight lines, parabolas, and turning points.',
+        lesson: `LINEAR AND QUADRATIC\n\nLinear: y = a + bx\nQuadratic: y = ax² + bx + c\n\nLinear functions have constant slope. Quadratic functions can have a maximum or minimum turning point.`
+      },
+      {
+        title: 'Differentiation',
+        short: 'Rates of change and marginal ideas.',
+        lesson: `DIFFERENTIATION\n\nDerivative means rate of change.\n\nPower rule:\nd/dx(x^n) = nx^(n-1)\n\nEconomics link:\nMarginal cost, marginal revenue, and marginal product are derivatives.`
+      },
+      {
+        title: 'Partial derivatives',
+        short: 'Differentiate one variable at a time.',
+        lesson: `PARTIAL DERIVATIVES\n\nIf a function has more than one variable, differentiate with respect to one variable and hold the others constant.`
+      },
+      {
+        title: 'Optimization',
+        short: 'Find maxima and minima.',
+        lesson: `OPTIMIZATION\n\n1. Differentiate the function\n2. Set the derivative equal to zero\n3. Solve for the critical point\n4. Use the second derivative to decide max or min`
+      },
+      {
+        title: 'Elasticity',
+        short: 'Measure responsiveness.',
+        lesson: `ELASTICITY\n\nElasticity measures responsiveness.\n\nA common formula is:\nE = (dQ/dP)(P/Q)\n\nInterpret the magnitude carefully.`
+      }
+    ];
+
+    const formulas = [
+      { name: 'Linear function', text: 'y = a + bx' },
+      { name: 'Quadratic function', text: 'y = ax² + bx + c' },
+      { name: 'Power rule', text: 'd/dx(x^n) = nx^(n-1)' },
+      { name: 'Marginal cost', text: 'MC = dC/dQ' },
+      { name: 'Marginal revenue', text: 'MR = dR/dQ' },
+      { name: 'Elasticity', text: 'E = (dQ/dP)(P/Q)' }
+    ];
+
+    const planner = [
+      { day: 'Day 1', task: 'Functions and graphs' },
+      { day: 'Day 2', task: 'Linear and quadratic practice' },
+      { day: 'Day 3', task: 'Differentiation basics' },
+      { day: 'Day 4', task: 'Differentiation word problems' },
+      { day: 'Day 5', task: 'Partial derivatives' },
+      { day: 'Day 6', task: 'Optimization' },
+      { day: 'Day 7', task: 'Elasticity and mixed revision' }
+    ];
+
+    const quizzes = [
+      {
+        q: 'If y = 3x² + 2x, what is dy/dx?',
+        options: ['6x + 2', '3x + 2', '6x', '2x + 2'],
+        answer: 0,
+        explain: 'Differentiate term by term. d/dx(3x²)=6x and d/dx(2x)=2.'
+      },
+      {
+        q: 'If π(x) = -x² + 8x - 3, the turning point is a...',
+        options: ['Minimum', 'Maximum', 'Saddle point', 'Constant'],
+        answer: 1,
+        explain: 'The coefficient of x² is negative, so the parabola opens downward. That gives a maximum.'
+      },
+      {
+        q: 'For Q = 4K²L, what is ∂Q/∂K?',
+        options: ['8KL', '4K²', '8K²L', '4KL'],
+        answer: 0,
+        explain: 'Treat L as constant and differentiate 4K²L with respect to K.'
+      }
+    ];
+
+    let currentQuiz = null;
+
+    function renderTopics() {
+      const grid = document.getElementById('topicGrid');
+      topics.forEach(topic => {
+        const item = document.createElement('div');
+        item.className = 'topic';
+        item.innerHTML = `<h3>${topic.title}</h3><p>${topic.short}</p>`;
+        item.onclick = () => document.getElementById('lessonBox').textContent = topic.lesson;
+        grid.appendChild(item);
+      });
+    }
+
+    function renderFormulas() {
+      const list = document.getElementById('formulaList');
+      formulas.forEach(f => {
+        const item = document.createElement('div');
+        item.className = 'formula';
+        item.innerHTML = `<strong>${f.name}</strong><p>${f.text}</p>`;
+        list.appendChild(item);
+      });
+    }
+
+    function renderPlanner() {
+      const grid = document.getElementById('plannerGrid');
+      planner.forEach(p => {
+        const item = document.createElement('div');
+        item.className = 'planner-item';
+        item.innerHTML = `<h4>${p.day}</h4><p>${p.task}</p>`;
+        grid.appendChild(item);
+      });
+    }
+
+    function loadQuiz() {
+      currentQuiz = quizzes[Math.floor(Math.random() * quizzes.length)];
+      document.getElementById('quizQuestion').textContent = currentQuiz.q;
+      document.getElementById('quizFeedback').textContent = '';
+      const optionList = document.getElementById('optionList');
+      optionList.innerHTML = '';
+      currentQuiz.options.forEach((option, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.textContent = option;
+        btn.onclick = () => markQuiz(index);
+        optionList.appendChild(btn);
+      });
+    }
+
+    function markQuiz(index) {
+      const buttons = document.querySelectorAll('.option');
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === currentQuiz.answer) btn.classList.add('correct');
+        if (i === index && i !== currentQuiz.answer) btn.classList.add('wrong');
+      });
+      document.getElementById('quizFeedback').textContent = (index === currentQuiz.answer ? 'Correct. ' : 'Not correct. ') + currentQuiz.explain;
+    }
+
+    function addBubble(text, type) {
+      const div = document.createElement('div');
+      div.className = `bubble ${type}`;
+      div.textContent = text;
+      const box = document.getElementById('chatBox');
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function samplePrompt() {
+      document.getElementById('question').value = 'Teach me optimization step by step with a simple economics example.';
+    }
+
+    async function checkHealth() {
+      try {
+        const res = await fetch('/api/health');
+        const data = await res.json();
+        document.getElementById('statusText').textContent = data.aiConfigured
+          ? 'Server is running and AI key is configured.'
+          : 'Server is running, but the AI key is not configured yet.';
+      } catch (error) {
+        document.getElementById('statusText').textContent = 'Could not reach the server.';
+      }
+    }
+
+    async function askTutor() {
+      const input = document.getElementById('question');
+      const askBtn = document.getElementById('askBtn');
+      const question = input.value.trim();
+      if (!question) return;
+
+      addBubble(question, 'user');
+      input.value = '';
+      askBtn.disabled = true;
+      askBtn.textContent = 'Thinking...';
+
+      try {
+        const res = await fetch('/api/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question })
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Request failed.');
+        addBubble(data.answer || 'No answer returned.', 'bot');
+      } catch (error) {
+        addBubble(`Error: ${error.message}`, 'bot');
+      } finally {
+        askBtn.disabled = false;
+        askBtn.textContent = 'Ask assistant';
+      }
+    }
+
+    renderTopics();
+    renderFormulas();
+    renderPlanner();
+    loadQuiz();
+    checkHealth();
+  </script>
+</body>
+</html>
