@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Economics Visual Lab</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div>
+        <h1>Economics Visual Lab</h1>
+        <p>Interactive Demand, Supply, and Tax Simulator</p>
+      </div>
+      <a class="back-link" href="/">← Back to Ecomath</a>
+    </header>
+
+    <main class="layout">
+      <section class="panel controls">
+        <h2>Controls</h2>
+
+        <div class="control">
+          <label for="a">Demand intercept (a): <span id="aVal"></span></label>
+          <input type="range" id="a" min="20" max="200" value="120" />
+        </div>
+
+        <div class="control">
+          <label for="b">Demand slope (b): <span id="bVal"></span></label>
+          <input type="range" id="b" min="1" max="10" step="0.1" value="2" />
+        </div>
+
+        <div class="control">
+          <label for="c">Supply intercept (c): <span id="cVal"></span></label>
+          <input type="range" id="c" min="-50" max="100" value="20" />
+        </div>
+
+        <div class="control">
+          <label for="d">Supply slope (d): <span id="dVal"></span></label>
+          <input type="range" id="d" min="1" max="10" step="0.1" value="2" />
+        </div>
+
+        <div class="control">
+          <label for="tax">Per-unit tax (t): <span id="taxVal"></span></label>
+          <input type="range" id="tax" min="0" max="50" step="1" value="10" />
+        </div>
+
+        <div class="equations">
+          <h3>Model</h3>
+          <p id="demandEq"></p>
+          <p id="supplyEq"></p>
+          <p id="taxSupplyEq"></p>
+        </div>
+      </section>
+
+      <section class="panel graph-panel">
+        <h2>Graph</h2>
+        <canvas id="graph" width="760" height="520"></canvas>
+      </section>
+    </main>
+
+    <section class="results">
+      <div class="card">
+        <h3>Before Tax</h3>
+        <p>Equilibrium Price: <strong id="pStar"></strong></p>
+        <p>Equilibrium Quantity: <strong id="qStar"></strong></p>
+      </div>
+
+      <div class="card">
+        <h3>After Tax</h3>
+        <p>Consumer Price: <strong id="pc"></strong></p>
+        <p>Producer Price: <strong id="pp"></strong></p>
+        <p>Quantity: <strong id="qt"></strong></p>
+      </div>
+
+      <div class="card">
+        <h3>Tax Burden</h3>
+        <p>Consumers bear: <strong id="consumerBurden"></strong></p>
+        <p>Producers bear: <strong id="producerBurden"></strong></p>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
