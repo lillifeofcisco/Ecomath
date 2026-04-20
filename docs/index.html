@@ -3,311 +3,172 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ghana Economy Lab</title>
+  <title>ECON215 Ghana Economy Lab</title>
   <style>
     :root {
       --bg: #07121f;
-      --panel: #0f1c2d;
-      --card: #14263d;
-      --card-2: #0b1727;
-      --text: #eef4ff;
-      --muted: #aebfd8;
+      --panel: rgba(15, 28, 45, 0.94);
+      --card: rgba(11, 23, 39, 0.95);
       --line: #243c5d;
+      --text: #eef4ff;
+      --muted: #afc0d8;
       --gold: #f4b400;
       --green: #22c55e;
       --red: #ef4444;
       --blue: #3b82f6;
       --purple: #8b5cf6;
-      --shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+      --shadow: 0 18px 40px rgba(0,0,0,.28);
     }
-
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: Inter, Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #07121f, #0e2038, #122845);
+      background: linear-gradient(135deg, #07121f, #0d2037, #132745);
       color: var(--text);
       min-height: 100vh;
     }
-
     .wrap {
-      width: min(1380px, 94%);
+      width: min(1400px, 94%);
       margin: 0 auto;
       padding: 24px 0 40px;
     }
-
     .hero {
       display: flex;
+      gap: 18px;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 18px;
       flex-wrap: wrap;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
-
     .hero h1 {
       margin: 0 0 10px;
-      font-size: 2.15rem;
-      line-height: 1.1;
+      font-size: 2.1rem;
+      line-height: 1.06;
     }
-
     .hero p {
       margin: 0;
+      max-width: 840px;
       color: var(--muted);
-      line-height: 1.55;
-      max-width: 780px;
+      line-height: 1.58;
     }
-
-    .hero-badge {
+    .pill {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       padding: 11px 16px;
       border-radius: 999px;
-      background: rgba(244, 180, 0, 0.12);
-      border: 1px solid rgba(244, 180, 0, 0.24);
+      background: rgba(244,180,0,.12);
+      border: 1px solid rgba(244,180,0,.24);
       color: #ffe08a;
-      font-weight: 700;
+      font-weight: 800;
     }
-
-    .topbar {
-      display: grid;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-
-    .tabs,
-    .presets {
+    .toolbar { display: grid; gap: 14px; margin-bottom: 18px; }
+    .tabs, .quick-presets {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
     }
-
-    .tab,
-    .preset {
+    .tab, .preset {
       border: 1px solid var(--line);
       background: rgba(20, 38, 61, 0.9);
       color: var(--text);
       padding: 10px 14px;
       border-radius: 999px;
       cursor: pointer;
-      font-weight: 700;
-      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+      font-weight: 800;
+      transition: .15s ease;
     }
-
-    .tab:hover,
-    .preset:hover {
-      transform: translateY(-1px);
-      border-color: var(--gold);
-    }
-
-    .tab.active {
-      background: rgba(244, 180, 0, 0.16);
-      border-color: rgba(244, 180, 0, 0.38);
-      color: #ffe08a;
-    }
-
-    .preset {
-      background: rgba(59, 130, 246, 0.1);
-      border-color: rgba(59, 130, 246, 0.25);
-    }
-
+    .tab:hover, .preset:hover { transform: translateY(-1px); border-color: var(--gold); }
+    .tab.active { background: rgba(244,180,0,.16); border-color: rgba(244,180,0,.38); color: #ffe08a; }
+    .preset { background: rgba(59,130,246,.12); border-color: rgba(59,130,246,.25); }
     .layout {
       display: grid;
       grid-template-columns: 340px 1fr 320px;
       gap: 18px;
       align-items: start;
     }
-
     .panel {
-      background: rgba(15, 28, 45, 0.94);
+      background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 20px;
       box-shadow: var(--shadow);
       padding: 18px;
     }
-
-    .panel h2 {
-      margin: 0 0 8px;
-      font-size: 1.18rem;
-    }
-
-    .subtext {
-      margin: 0 0 16px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
+    .panel h2 { margin: 0 0 8px; font-size: 1.15rem; }
+    .subtext { margin: 0 0 14px; color: var(--muted); line-height: 1.52; }
     .control {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       padding: 12px;
-      background: rgba(11, 23, 39, 0.92);
-      border: 1px solid rgba(36, 60, 93, 0.9);
       border-radius: 14px;
+      background: var(--card);
+      border: 1px solid rgba(36,60,93,.9);
     }
-
-    .control-top {
+    .control-top { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+    .control label { font-size: .95rem; font-weight: 700; }
+    .value { color: #ffe08a; font-weight: 800; font-size: .92rem; }
+    input[type="range"] { width: 100%; accent-color: var(--gold); }
+    .module-head {
       display: flex;
       justify-content: space-between;
       gap: 12px;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .control label {
-      font-size: 0.95rem;
-      font-weight: 700;
-    }
-
-    .control-value {
-      color: #ffe08a;
-      font-weight: 800;
-      font-size: 0.92rem;
-      white-space: nowrap;
-    }
-
-    input[type="range"] {
-      width: 100%;
-      accent-color: var(--gold);
-    }
-
-    .visual-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: start;
+      align-items: flex-start;
       flex-wrap: wrap;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
-
-    .module-title {
-      margin: 0;
-      font-size: 1.2rem;
-    }
-
-    .module-note {
-      margin: 6px 0 0;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
+    .module-title { margin: 0; font-size: 1.22rem; }
+    .module-note { margin: 6px 0 0; color: var(--muted); line-height: 1.52; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 8px; }
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
+      padding: 7px 11px;
       border-radius: 999px;
-      font-size: 0.88rem;
+      font-size: .86rem;
       font-weight: 800;
       border: 1px solid transparent;
     }
-
-    .badge.gold {
-      color: #ffe08a;
-      background: rgba(244, 180, 0, 0.12);
-      border-color: rgba(244, 180, 0, 0.24);
-    }
-
-    .badge.green {
-      color: #b8f3c8;
-      background: rgba(34, 197, 94, 0.12);
-      border-color: rgba(34, 197, 94, 0.24);
-    }
-
-    .badge.red {
-      color: #ffc0c0;
-      background: rgba(239, 68, 68, 0.12);
-      border-color: rgba(239, 68, 68, 0.24);
-    }
-
-    .badge.blue {
-      color: #cde1ff;
-      background: rgba(59, 130, 246, 0.12);
-      border-color: rgba(59, 130, 246, 0.24);
-    }
-
+    .badge.gold { color: #ffe08a; background: rgba(244,180,0,.12); border-color: rgba(244,180,0,.24); }
+    .badge.green { color: #b8f3c8; background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.24); }
+    .badge.red { color: #ffc2c2; background: rgba(239,68,68,.12); border-color: rgba(239,68,68,.24); }
+    .badge.blue { color: #cfe1ff; background: rgba(59,130,246,.12); border-color: rgba(59,130,246,.24); }
     .metrics {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       margin-bottom: 14px;
     }
-
     .metric {
       padding: 14px;
       border-radius: 16px;
-      background: rgba(11, 23, 39, 0.95);
-      border: 1px solid rgba(36, 60, 93, 0.9);
-      transition: transform 0.18s ease;
+      background: var(--card);
+      border: 1px solid rgba(36,60,93,.9);
     }
-
-    .metric:hover {
-      transform: translateY(-2px);
-    }
-
-    .metric-label {
-      color: var(--muted);
-      font-size: 0.88rem;
-      margin-bottom: 6px;
-    }
-
-    .metric-value {
-      font-size: 1.15rem;
-      font-weight: 800;
-    }
-
-    .chart-card {
-      background: rgba(7, 18, 31, 0.92);
-      border: 1px solid rgba(36, 60, 93, 0.9);
+    .metric-label { color: var(--muted); font-size: .88rem; margin-bottom: 6px; }
+    .metric-value { font-size: 1.12rem; font-weight: 800; }
+    .chart-box {
+      background: rgba(7,18,31,.92);
+      border: 1px solid rgba(36,60,93,.9);
       border-radius: 18px;
       padding: 14px;
     }
-
-    canvas {
-      width: 100%;
-      display: block;
-      background: #ffffff;
-      border-radius: 14px;
-    }
-
-    .insight-box,
-    .story-box {
-      background: rgba(11, 23, 39, 0.95);
-      border: 1px solid rgba(36, 60, 93, 0.9);
-      border-radius: 16px;
-      padding: 14px;
+    canvas { width: 100%; display: block; background: #fff; border-radius: 14px; }
+    .story-box, .insight-box, .fact-box {
       margin-top: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      background: var(--card);
+      border: 1px solid rgba(36,60,93,.9);
     }
-
-    .insight-box h3,
-    .story-box h3 {
-      margin: 0 0 10px;
-      font-size: 1rem;
-    }
-
-    .insight-list {
-      display: grid;
-      gap: 10px;
-      padding: 0;
-      margin: 0;
-      list-style: none;
-    }
-
-    .insight-item {
+    .story-box h3, .insight-box h3, .fact-box h3 { margin: 0 0 10px; font-size: 1rem; }
+    .story-box p { margin: 0; color: var(--muted); line-height: 1.58; }
+    .insights { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+    .insights li {
       color: var(--muted);
       line-height: 1.52;
       padding-left: 14px;
       position: relative;
     }
-
-    .insight-item::before {
+    .insights li::before {
       content: "";
       width: 7px;
       height: 7px;
@@ -317,28 +178,23 @@
       left: 0;
       top: 8px;
     }
-
-    .story-box p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.58;
+    .facts-grid { display: grid; gap: 10px; }
+    .fact {
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(20,38,61,.72);
+      border: 1px solid rgba(36,60,93,.9);
     }
-
-    .footer-note {
-      margin-top: 18px;
+    .fact strong { display: block; margin-bottom: 5px; }
+    .note {
+      margin-top: 14px;
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: .92rem;
       line-height: 1.5;
     }
-
     @media (max-width: 1180px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
-      .metrics {
-        grid-template-columns: 1fr;
-      }
+      .layout { grid-template-columns: 1fr; }
+      .metrics { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -346,30 +202,31 @@
   <div class="wrap">
     <section class="hero">
       <div>
-        <h1>Ghana Economy Lab</h1>
+        <h1>ECON215 Ghana Economy Lab</h1>
         <p>
-          An interactive Ghana-focused economics playground. Switch between inflation, cedi depreciation,
-          fuel and transport pressure, household budgets, VAT impact, and monetary policy. Move sliders,
-          test presets, and see the economy story change live.
+          A lecture-companion dashboard built around your ECON215 slides: National Income Computation,
+          Agricultural Sector, Inflation in Ghana, Fiscal Policy, Monetary Policy, and the External Sector.
+          The structure follows the lecture topics, while the slider outputs are classroom simulations for understanding concepts fast.
         </p>
       </div>
-      <div class="hero-badge">Ghana presets • Live visuals • Plain-English insights</div>
+      <div class="pill">Slides-based structure • No-login static app</div>
     </section>
 
-    <section class="topbar">
+    <section class="toolbar">
       <div class="tabs" id="tabs"></div>
-      <div class="presets" id="presets"></div>
+      <div class="quick-presets" id="presets"></div>
     </section>
 
     <main class="layout">
       <section class="panel">
         <h2>Controls</h2>
-        <p class="subtext" id="controlsIntro">Adjust the current module and watch the results change.</p>
+        <p class="subtext" id="controlsIntro"></p>
         <div id="controls"></div>
+        <div class="note" id="scopeNote"></div>
       </section>
 
       <section class="panel">
-        <div class="visual-top">
+        <div class="module-head">
           <div>
             <h2 class="module-title" id="moduleTitle"></h2>
             <p class="module-note" id="moduleNote"></p>
@@ -377,712 +234,636 @@
           <div class="badge-row" id="badges"></div>
         </div>
 
-        <section class="metrics" id="metrics"></section>
+        <div class="metrics" id="metrics"></div>
 
-        <div class="chart-card">
-          <canvas id="chart" width="760" height="430"></canvas>
+        <div class="chart-box">
+          <canvas id="chart" width="780" height="430"></canvas>
         </div>
 
         <div class="story-box">
-          <h3>What this means</h3>
+          <h3>Lecture interpretation</h3>
           <p id="story"></p>
         </div>
       </section>
 
       <section class="panel">
-        <h2>Insights</h2>
-        <p class="subtext">Plain-English output for the current scenario.</p>
+        <h2>Fast study notes</h2>
+        <p class="subtext">What this tab is trying to teach you.</p>
         <div class="insight-box">
           <h3>Key takeaways</h3>
-          <ul class="insight-list" id="insights"></ul>
+          <ul class="insights" id="insights"></ul>
         </div>
-        <p class="footer-note">
-          Use the presets to simulate a student in Accra, a cedi shock, a fuel shock, or a high inflation period.
-        </p>
+        <div class="fact-box">
+          <h3>Slide-linked facts</h3>
+          <div class="facts-grid" id="facts"></div>
+        </div>
       </section>
     </main>
   </div>
 
   <script>
-    const money = new Intl.NumberFormat("en-GH", {
-      style: "currency",
-      currency: "GHS",
-      maximumFractionDigits: 0
-    });
+    const money = new Intl.NumberFormat('en-GH', { style: 'currency', currency: 'GHS', maximumFractionDigits: 0 });
+    const compact = new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 });
 
     const state = {
-      currentModule: "inflation",
+      currentModule: 'nationalIncome',
+      consumption: 58,
+      government: 18,
+      investment: 21,
+      exports: 17,
+      imports: 24,
 
-      inflationRate: 18,
-      wageGrowth: 8,
-      nominalIncome: 3200,
-      basketCost: 1500,
+      rainfallReliance: 78,
+      irrigationUse: 42.6,
+      agroProcessingGap: 68,
+      foodImportBill: 2.0,
 
-      baseExchangeRate: 15.5,
-      depreciationRate: 20,
-      importShare: 55,
-      passThrough: 65,
-      importBasket: 1200,
+      cpiGrowth: 18,
+      foodInflation: 24,
+      nonFoodInflation: 12,
+      importedInflation: 16,
+      localInflation: 19,
+      monthlyInflation: 2.1,
 
-      fuelJump: 18,
-      fareSensitivity: 65,
-      foodTransportWeight: 40,
-      monthlyTransportSpend: 420,
-      monthlyFoodSpend: 900,
-
-      budgetIncome: 3200,
-      rent: 950,
-      food: 900,
-      transport: 420,
-      utilities: 220,
-      school: 300,
-      costShock: 15,
-
-      basePrice: 100,
-      vatRate: 15,
-      levyRate: 3,
+      revenue: 23,
+      expenditure: 30,
+      interestBurden: 7,
+      capitalSpending: 6,
 
       policyRate: 27,
-      inflationNow: 18,
-      loanAmount: 10000,
-      savingsAmount: 8000
+      inflationTargetMid: 8,
+      inflationActual: 18,
+      liquidityStance: 62,
+
+      exportsValue: 34,
+      importsValue: 42,
+      remittanceSupport: 8,
+      externalDebtService: 10
     };
 
     const modules = {
+      nationalIncome: {
+        label: 'National Income',
+        intro: 'Lecture 1-2: expenditure approach, GDP growth, percentage shares, nominal vs real GDP.',
+        note: 'Core formula: GDP = C + G + I + (X - M).',
+        scope: 'Built from the National Income Computation slides. Includes the expenditure approach and the sector-share snapshot from the 2021 chart.',
+        controls: [
+          { key: 'consumption', label: 'Consumption (C)', min: 10, max: 80, step: 1, type: 'percent' },
+          { key: 'government', label: 'Government spending (G)', min: 5, max: 40, step: 1, type: 'percent' },
+          { key: 'investment', label: 'Investment (I)', min: 5, max: 40, step: 1, type: 'percent' },
+          { key: 'exports', label: 'Exports (X)', min: 5, max: 40, step: 1, type: 'percent' },
+          { key: 'imports', label: 'Imports (M)', min: 5, max: 45, step: 1, type: 'percent' }
+        ],
+        compute(s) {
+          const gdpIndex = s.consumption + s.government + s.investment + s.exports - s.imports;
+          const domesticDemand = s.consumption + s.government + s.investment;
+          const externalGap = s.exports - s.imports;
+          const importLeakageRatio = (s.imports / Math.max(gdpIndex, 1)) * 100;
+          return { gdpIndex, domesticDemand, externalGap, importLeakageRatio };
+        },
+        metrics(r) {
+          return [
+            { label: 'GDP index', value: r.gdpIndex.toFixed(1) },
+            { label: 'Domestic demand', value: r.domesticDemand.toFixed(1) },
+            { label: 'Net exports', value: r.externalGap.toFixed(1) }
+          ];
+        },
+        badges(r) {
+          return [
+            r.externalGap >= 0 ? { text: 'External support to GDP', kind: 'green' } : { text: 'Import leakage pressure', kind: 'red' },
+            { text: 'Use expenditure approach', kind: 'gold' }
+          ];
+        },
+        story(r) {
+          return `This tab mirrors the lecture’s expenditure approach. GDP rises when C, G, I, and X are stronger, but imports act as a leakage. Here, net exports are ${r.externalGap.toFixed(1)}, so the external sector is ${r.externalGap >= 0 ? 'supporting' : 'dragging'} the GDP index.`;
+        },
+        insights(r, s) {
+          return [
+            `GDP is being constructed here as C + G + I + (X - M), exactly the expenditure logic from the national income slides.`,
+            `Domestic demand stands at ${r.domesticDemand.toFixed(1)}, which means most of the simulated output is being driven internally.`,
+            `Net exports are ${r.externalGap.toFixed(1)}, while import leakage is about ${r.importLeakageRatio.toFixed(1)}% of the GDP index.`
+          ];
+        },
+        facts: [
+          { k: 'Lecture focus', v: 'Values, growth rates, percentage shares of GDP components' },
+          { k: 'Formula focus', v: 'GDP = C + G + I + (X - M)' },
+          { k: 'Sector share snapshot', v: '2021 GDP shares: Agric 13.7%, Industry 30.2%, Services 49.2%' },
+          { k: 'Employment snapshot', v: '2021 employment shares: Agric 33%, Industry 20.6%, Services 53.3%' }
+        ],
+        chart(r, s) {
+          drawBarChart(
+            ['C', 'G', 'I', 'X', 'M', 'GDP'],
+            [s.consumption, s.government, s.investment, s.exports, s.imports, r.gdpIndex],
+            ['#2563eb', '#22c55e', '#8b5cf6', '#f59e0b', '#ef4444', '#111827'],
+            null
+          );
+        }
+      },
+
+      agriculture: {
+        label: 'Agriculture',
+        intro: 'Lectures 3-5: structure of the agricultural sector, GDP and employment contribution, challenges, and policies.',
+        note: 'The slides stress rain-fed, small-scale production and weak technology adoption.',
+        scope: 'Built from the agricultural sector slides, including the points on rain-fed farming, small-scale production, underused agricultural land, and food imports.',
+        controls: [
+          { key: 'rainfallReliance', label: 'Rain-fed reliance', min: 20, max: 100, step: 1, type: 'percent' },
+          { key: 'irrigationUse', label: 'Irrigation use of potential', min: 0, max: 100, step: 0.1, type: 'percent' },
+          { key: 'agroProcessingGap', label: 'Agro-processing gap', min: 10, max: 100, step: 1, type: 'percent' },
+          { key: 'foodImportBill', label: 'Food import bill', min: 0.5, max: 6, step: 0.1, type: 'dollarbn' }
+        ],
+        compute(s) {
+          const productivityIndex = 100 - (0.45 * s.rainfallReliance) + (0.55 * s.irrigationUse) - (0.25 * s.agroProcessingGap);
+          const vulnerabilityIndex = (0.5 * s.rainfallReliance) + (0.3 * s.agroProcessingGap) + (4 * s.foodImportBill) - (0.25 * s.irrigationUse);
+          const resilience = 100 - vulnerabilityIndex / 2;
+          return { productivityIndex, vulnerabilityIndex, resilience };
+        },
+        metrics(r) {
+          return [
+            { label: 'Productivity index', value: r.productivityIndex.toFixed(1) },
+            { label: 'Vulnerability index', value: r.vulnerabilityIndex.toFixed(1) },
+            { label: 'Resilience score', value: r.resilience.toFixed(1) }
+          ];
+        },
+        badges(r) {
+          return [
+            r.vulnerabilityIndex > 55 ? { text: 'High food-system risk', kind: 'red' } : { text: 'Lower rural vulnerability', kind: 'green' },
+            { text: 'Sector still strategic', kind: 'gold' }
+          ];
+        },
+        story(r) {
+          return `The lecture presents Ghanaian agriculture as highly rain-fed and dominated by small-scale traditional methods. In this simulation, vulnerability is ${r.vulnerabilityIndex.toFixed(1)}, which means the sector is ${r.vulnerabilityIndex > 55 ? 'still very exposed to weather and supply shocks' : 'becoming somewhat more stable'}.'`;
+        },
+        insights(r, s) {
+          return [
+            `The more the sector depends on rainfall, the less stable crop output tends to be. Here, rain-fed reliance is ${s.rainfallReliance.toFixed(1)}%.`,
+            `Irrigation use is only ${s.irrigationUse.toFixed(1)}% of potential in this simulation, so the model treats resilience as limited.`,
+            `A food import bill of $${s.foodImportBill.toFixed(1)}bn suggests domestic supply and agro-processing are not fully meeting demand.`
+          ];
+        },
+        facts: [
+          { k: 'Slide point', v: 'Agriculture is largely rain-fed and irregular in pattern' },
+          { k: 'Slide point', v: 'Small-scale production dominates the sector' },
+          { k: 'Slide fact', v: 'Only 42.6% of 1.9 million hectares of irrigation potential had been developed in 2021' },
+          { k: 'Slide fact', v: 'Ghana still imports around $2bn of food annually' }
+        ],
+        chart(r, s) {
+          drawBarChart(
+            ['Rain reliance', 'Irrigation', 'Processing gap', 'Food import bill', 'Productivity', 'Vulnerability'],
+            [s.rainfallReliance, s.irrigationUse, s.agroProcessingGap, s.foodImportBill * 10, r.productivityIndex, r.vulnerabilityIndex],
+            ['#ef4444', '#22c55e', '#8b5cf6', '#f59e0b', '#2563eb', '#111827'],
+            null
+          );
+        }
+      },
+
       inflation: {
-        label: "Inflation",
-        intro: "See how price growth changes real income and purchasing power.",
+        label: 'Inflation in Ghana',
+        intro: 'Lecture 10: CPI, food vs non-food, imported vs local inflation, year-on-year and month-on-month inflation.',
+        note: 'This tab follows the inflation slides, especially the CPI breakdown and policy response logic.',
+        scope: 'Built from the inflation lecture outline: measurement of inflation, disaggregation, trends, and policy response.',
         controls: [
-          { key: "nominalIncome", label: "Monthly income", min: 1000, max: 12000, step: 100, type: "money" },
-          { key: "inflationRate", label: "Inflation rate", min: 0, max: 45, step: 0.5, type: "percent" },
-          { key: "wageGrowth", label: "Wage growth", min: 0, max: 35, step: 0.5, type: "percent" },
-          { key: "basketCost", label: "Base monthly basket", min: 500, max: 5000, step: 50, type: "money" }
+          { key: 'cpiGrowth', label: 'Headline CPI inflation', min: 0, max: 45, step: 0.5, type: 'percent' },
+          { key: 'foodInflation', label: 'Food inflation', min: 0, max: 60, step: 0.5, type: 'percent' },
+          { key: 'nonFoodInflation', label: 'Non-food inflation', min: 0, max: 45, step: 0.5, type: 'percent' },
+          { key: 'importedInflation', label: 'Imported inflation', min: 0, max: 45, step: 0.5, type: 'percent' },
+          { key: 'localInflation', label: 'Local inflation', min: 0, max: 45, step: 0.5, type: 'percent' },
+          { key: 'monthlyInflation', label: 'Month-on-month inflation', min: -2, max: 8, step: 0.1, type: 'percent' }
         ],
         compute(s) {
-          const realIncome = s.nominalIncome / (1 + s.inflationRate / 100);
-          const newBasketCost = s.basketCost * (1 + s.inflationRate / 100);
-          const purchasingPowerLoss = s.nominalIncome - realIncome;
-          const wageGap = s.wageGrowth - s.inflationRate;
-          const affordability = s.nominalIncome - newBasketCost;
-          return {
-            realIncome,
-            newBasketCost,
-            purchasingPowerLoss,
-            wageGap,
-            affordability
-          };
+          const foodGap = s.foodInflation - s.nonFoodInflation;
+          const importGap = s.importedInflation - s.localInflation;
+          const persistenceRisk = s.cpiGrowth + 0.35 * s.monthlyInflation;
+          return { foodGap, importGap, persistenceRisk };
         },
-        metrics(r) {
+        metrics(r, s) {
           return [
-            { label: "Real monthly income", value: fmtMoney(r.realIncome) },
-            { label: "New basket cost", value: fmtMoney(r.newBasketCost) },
-            { label: "Wage gap", value: fmtPct(r.wageGap) }
+            { label: 'Headline inflation', value: fmtPercent(s.cpiGrowth) },
+            { label: 'Food vs non-food gap', value: fmtPercent(r.foodGap) },
+            { label: 'Imported vs local gap', value: fmtPercent(r.importGap) }
           ];
         },
-        badges(r) {
-          const out = [];
-          out.push(r.wageGap >= 0
-            ? { text: "Wages keeping up", kind: "green" }
-            : { text: "Real income under pressure", kind: "red" });
-          out.push(r.newBasketCost > state.basketCost
-            ? { text: "Prices rising", kind: "gold" }
-            : { text: "Stable prices", kind: "green" });
-          return out;
-        },
-        story(r) {
-          return r.wageGap >= 0
-            ? `Prices are rising, but wage growth is at least matching inflation. Real pressure is milder in this scenario, even though the monthly basket still costs more than before.`
-            : `Prices are rising faster than wages. That means the same income now buys less, and the household feels squeezed even if the nominal salary did not change.`;
-        },
-        insights(r) {
+        badges(r, s) {
           return [
-            `At ${fmtPct(state.inflationRate)}, a basket that used to cost ${fmtMoney(state.basketCost)} now costs about ${fmtMoney(r.newBasketCost)}.`,
-            `Real income falls to roughly ${fmtMoney(r.realIncome)} even though nominal income stays at ${fmtMoney(state.nominalIncome)}.`,
-            r.wageGap >= 0
-              ? `Wage growth is ahead of inflation by ${fmtPct(r.wageGap)}, so households are better protected.`
-              : `Wage growth is behind inflation by ${fmtPct(Math.abs(r.wageGap))}, so purchasing power is falling.`
+            s.foodInflation > s.nonFoodInflation ? { text: 'Food prices leading', kind: 'red' } : { text: 'Non-food stronger', kind: 'blue' },
+            r.persistenceRisk > 20 ? { text: 'Inflation persistence risk', kind: 'gold' } : { text: 'Lower inflation pressure', kind: 'green' }
           ];
         },
-        chart(r) {
-          drawBarChart(
-            ["Nominal income", "Real income", "Old basket", "New basket"],
-            [state.nominalIncome, r.realIncome, state.basketCost, r.newBasketCost],
-            ["#2563eb", "#22c55e", "#f59e0b", "#ef4444"],
-            "GH₵"
-          );
+        story(r, s) {
+          return `This tab mirrors the lecture’s disaggregation approach. Food inflation is ${fmtPercent(s.foodInflation)}, non-food inflation is ${fmtPercent(s.nonFoodInflation)}, and the gap is ${fmtPercent(r.foodGap)}. That tells you which block is driving the headline more strongly.`;
         },
-        note: "Good for teaching why people can earn the same amount of money but still feel poorer."
-      },
-
-      cedi: {
-        label: "Cedi Depreciation",
-        intro: "Explore how a weaker cedi can push up imported prices and household pressure.",
-        controls: [
-          { key: "baseExchangeRate", label: "Starting exchange rate (GH₵/$)", min: 8, max: 25, step: 0.1, type: "number" },
-          { key: "depreciationRate", label: "Cedi depreciation", min: 0, max: 60, step: 0.5, type: "percent" },
-          { key: "importShare", label: "Import share in spending", min: 10, max: 90, step: 1, type: "percent" },
-          { key: "passThrough", label: "Pass-through to prices", min: 10, max: 100, step: 1, type: "percent" },
-          { key: "importBasket", label: "Imported goods basket", min: 300, max: 4000, step: 50, type: "money" }
+        insights(r, s) {
+          return [
+            `The inflation lecture is not just about one headline figure; it is about the composition of inflation.`,
+            `Food inflation exceeds non-food inflation by ${fmtPercent(r.foodGap)}, which suggests food items are the stronger pressure point in this scenario.`,
+            `Imported inflation is ${fmtPercent(s.importedInflation)} while local inflation is ${fmtPercent(s.localInflation)}, so the imported-local gap is ${fmtPercent(r.importGap)}.`
+          ];
+        },
+        facts: [
+          { k: 'Lecture focus', v: 'CPI changes and inflation in Ghana' },
+          { k: 'Disaggregation', v: 'Imported vs local; food vs non-food' },
+          { k: 'Trend tools', v: 'Year-on-year and month-on-month inflation' },
+          { k: 'Outcome', v: 'Identify the items contributing most to inflation' }
         ],
-        compute(s) {
-          const newRate = s.baseExchangeRate * (1 + s.depreciationRate / 100);
-          const importedPriceIncreasePct = (s.depreciationRate * s.passThrough) / 100;
-          const newImportBasket = s.importBasket * (1 + importedPriceIncreasePct / 100);
-          const generalPressurePct = (s.importShare * importedPriceIncreasePct) / 100;
-          return {
-            newRate,
-            importedPriceIncreasePct,
-            newImportBasket,
-            generalPressurePct
-          };
-        },
-        metrics(r) {
-          return [
-            { label: "New exchange rate", value: `${r.newRate.toFixed(2)} GH₵/$` },
-            { label: "Imported goods pressure", value: fmtPct(r.importedPriceIncreasePct) },
-            { label: "New import basket", value: fmtMoney(r.newImportBasket) }
-          ];
-        },
-        badges(r) {
-          const out = [];
-          out.push(r.importedPriceIncreasePct >= 15
-            ? { text: "Imported inflation risk", kind: "red" }
-            : { text: "Moderate external pressure", kind: "blue" });
-          out.push(r.generalPressurePct >= 8
-            ? { text: "Broad household impact", kind: "gold" }
-            : { text: "Contained spillover", kind: "green" });
-          return out;
-        },
-        story(r) {
-          return `When the cedi weakens, imported goods become more expensive in local currency. The stronger the pass-through and the higher the import share, the more households feel the price shock in daily life.`;
-        },
-        insights(r) {
-          return [
-            `An exchange rate of ${state.baseExchangeRate.toFixed(2)} GH₵/$ becomes about ${r.newRate.toFixed(2)} GH₵/$ after the depreciation shock.`,
-            `With pass-through at ${fmtPct(state.passThrough)}, the imported basket rises from ${fmtMoney(state.importBasket)} to roughly ${fmtMoney(r.newImportBasket)}.`,
-            `Because imports make up ${fmtPct(state.importShare)} of spending, the broader household pressure is about ${fmtPct(r.generalPressurePct)}.`
-          ];
-        },
-        chart(r) {
+        chart(r, s) {
           drawBarChart(
-            ["Old FX rate", "New FX rate", "Old import basket", "New import basket"],
-            [state.baseExchangeRate, r.newRate, state.importBasket, r.newImportBasket],
-            ["#2563eb", "#ef4444", "#22c55e", "#f59e0b"],
+            ['Headline', 'Food', 'Non-food', 'Imported', 'Local', 'MoM'],
+            [s.cpiGrowth, s.foodInflation, s.nonFoodInflation, s.importedInflation, s.localInflation, s.monthlyInflation],
+            ['#111827', '#ef4444', '#2563eb', '#f59e0b', '#22c55e', '#8b5cf6'],
             null
           );
-        },
-        note: "Good for showing why a currency shock can end up in market prices, especially for imported items."
+        }
       },
 
-      transport: {
-        label: "Fuel & Transport",
-        intro: "Trace the pass-through from fuel prices to transport fares and food costs.",
+      fiscal: {
+        label: 'Fiscal Policy',
+        intro: 'Lectures 6-7: revenue, expenditure, deficit, primary balance, public debt, and IMF programme issues.',
+        note: 'This tab is a simplified budget-position simulator linked to the lecture structure.',
+        scope: 'Built from the fiscal policy slides on government revenue and expenditure, deficit, debt, and the Ghana-IMF ECF programme.',
         controls: [
-          { key: "fuelJump", label: "Fuel price increase", min: 0, max: 60, step: 0.5, type: "percent" },
-          { key: "fareSensitivity", label: "Transport fare sensitivity", min: 10, max: 100, step: 1, type: "percent" },
-          { key: "foodTransportWeight", label: "Food reliance on transport", min: 5, max: 80, step: 1, type: "percent" },
-          { key: "monthlyTransportSpend", label: "Monthly transport spend", min: 100, max: 2000, step: 20, type: "money" },
-          { key: "monthlyFoodSpend", label: "Monthly food spend", min: 200, max: 4000, step: 20, type: "money" }
+          { key: 'revenue', label: 'Government revenue', min: 5, max: 40, step: 0.5, type: 'percent' },
+          { key: 'expenditure', label: 'Government expenditure', min: 10, max: 50, step: 0.5, type: 'percent' },
+          { key: 'interestBurden', label: 'Interest burden', min: 0, max: 15, step: 0.5, type: 'percent' },
+          { key: 'capitalSpending', label: 'Capital spending', min: 0, max: 15, step: 0.5, type: 'percent' }
         ],
         compute(s) {
-          const fareIncreasePct = (s.fuelJump * s.fareSensitivity) / 100;
-          const extraTransport = s.monthlyTransportSpend * (fareIncreasePct / 100);
-          const foodIncreasePct = (fareIncreasePct * s.foodTransportWeight) / 100;
-          const extraFood = s.monthlyFoodSpend * (foodIncreasePct / 100);
-          const totalExtra = extraTransport + extraFood;
-          return {
-            fareIncreasePct,
-            extraTransport,
-            foodIncreasePct,
-            extraFood,
-            totalExtra
-          };
+          const deficit = s.expenditure - s.revenue;
+          const primaryBalance = s.revenue - (s.expenditure - s.interestBurden);
+          const fiscalSpace = s.revenue - s.interestBurden - s.capitalSpending;
+          return { deficit, primaryBalance, fiscalSpace };
         },
         metrics(r) {
           return [
-            { label: "Fare increase", value: fmtPct(r.fareIncreasePct) },
-            { label: "Extra transport cost", value: fmtMoney(r.extraTransport) },
-            { label: "Total monthly pressure", value: fmtMoney(r.totalExtra) }
+            { label: 'Budget deficit', value: fmtPercent(r.deficit) },
+            { label: 'Primary balance', value: fmtPercent(r.primaryBalance) },
+            { label: 'Fiscal space', value: fmtPercent(r.fiscalSpace) }
           ];
         },
         badges(r) {
-          const out = [];
-          out.push(r.totalExtra >= 200
-            ? { text: "Commuter pressure rising", kind: "red" }
-            : { text: "Manageable fare impact", kind: "green" });
-          out.push(r.foodIncreasePct >= 6
-            ? { text: "Food spillover likely", kind: "gold" }
-            : { text: "Limited food spillover", kind: "blue" });
-          return out;
-        },
-        story(r) {
-          return `Fuel shocks rarely stop at the pump. They usually feed into transport fares, and when food distribution relies heavily on transport, market prices can move too.`;
-        },
-        insights(r) {
           return [
-            `A fuel jump of ${fmtPct(state.fuelJump)} produces an estimated fare increase of ${fmtPct(r.fareIncreasePct)} under the current sensitivity setting.`,
-            `Monthly transport spending rises by about ${fmtMoney(r.extraTransport)} from its base of ${fmtMoney(state.monthlyTransportSpend)}.`,
-            `Food costs also rise by around ${fmtPct(r.foodIncreasePct)}, adding roughly ${fmtMoney(r.extraFood)} to the monthly food bill.`
+            r.deficit > 0 ? { text: 'Deficit pressure', kind: 'red' } : { text: 'Budget not in deficit', kind: 'green' },
+            r.primaryBalance < 0 ? { text: 'Weak primary position', kind: 'gold' } : { text: 'Better primary balance', kind: 'blue' }
           ];
         },
-        chart(r) {
-          drawBarChart(
-            ["Base transport", "After shock", "Base food", "After spillover"],
-            [
-              state.monthlyTransportSpend,
-              state.monthlyTransportSpend + r.extraTransport,
-              state.monthlyFoodSpend,
-              state.monthlyFoodSpend + r.extraFood
-            ],
-            ["#2563eb", "#ef4444", "#22c55e", "#f59e0b"],
-            "GH₵"
-          );
+        story(r) {
+          return `The fiscal policy lecture ties together taxation, expenditure, deficit, primary balance, and debt. In this scenario, the deficit is ${fmtPercent(r.deficit)} and the primary balance is ${fmtPercent(r.primaryBalance)}, which tells you whether the core budget is tightening or still under stress.`;
         },
-        note: "Very useful for showing why fuel matters beyond transport alone."
-      },
-
-      budget: {
-        label: "Household Budget",
-        intro: "Test how a Ghanaian monthly budget reacts to a broad cost shock.",
-        controls: [
-          { key: "budgetIncome", label: "Monthly income", min: 1000, max: 12000, step: 100, type: "money" },
-          { key: "rent", label: "Rent", min: 200, max: 3000, step: 50, type: "money" },
-          { key: "food", label: "Food", min: 200, max: 3000, step: 50, type: "money" },
-          { key: "transport", label: "Transport", min: 100, max: 1500, step: 20, type: "money" },
-          { key: "utilities", label: "Utilities", min: 50, max: 1000, step: 10, type: "money" },
-          { key: "school", label: "School / personal", min: 50, max: 1500, step: 20, type: "money" },
-          { key: "costShock", label: "General cost shock", min: 0, max: 35, step: 0.5, type: "percent" }
+        insights(r, s) {
+          return [
+            `Revenue stands at ${fmtPercent(s.revenue)} while expenditure is ${fmtPercent(s.expenditure)}, creating a deficit of ${fmtPercent(r.deficit)}.`,
+            `Once interest payments are stripped out, the primary balance becomes ${fmtPercent(r.primaryBalance)}.`,
+            `This is why the lecture treats debt, deficit, and IMF-supported adjustment as part of the same fiscal story.`
+          ];
+        },
+        facts: [
+          { k: 'Lecture focus', v: 'Revenue and expenditure sources of government' },
+          { k: 'Budget concepts', v: 'Taxation, deficit, primary balance, public debt' },
+          { k: 'Policy layer', v: 'Ghana-IMF ECF programme' },
+          { k: 'Interpretation', v: 'Government uses spending and taxation to influence the economy' }
         ],
-        compute(s) {
-          const baseTotal = s.rent + s.food + s.transport + s.utilities + s.school;
-
-          const afterRent = s.rent * (1 + (s.costShock * 0.30) / 100);
-          const afterFood = s.food * (1 + (s.costShock * 1.00) / 100);
-          const afterTransport = s.transport * (1 + (s.costShock * 0.80) / 100);
-          const afterUtilities = s.utilities * (1 + (s.costShock * 0.50) / 100);
-          const afterSchool = s.school * (1 + (s.costShock * 0.35) / 100);
-
-          const afterTotal = afterRent + afterFood + afterTransport + afterUtilities + afterSchool;
-          const beforeBalance = s.budgetIncome - baseTotal;
-          const afterBalance = s.budgetIncome - afterTotal;
-          const stressRatio = (afterTotal / s.budgetIncome) * 100;
-
-          return {
-            baseTotal,
-            afterTotal,
-            beforeBalance,
-            afterBalance,
-            stressRatio,
-            afterRent,
-            afterFood,
-            afterTransport,
-            afterUtilities,
-            afterSchool
-          };
-        },
-        metrics(r) {
-          return [
-            { label: "Base total spending", value: fmtMoney(r.baseTotal) },
-            { label: "After-shock spending", value: fmtMoney(r.afterTotal) },
-            { label: "After-shock balance", value: fmtMoney(r.afterBalance) }
-          ];
-        },
-        badges(r) {
-          const out = [];
-          out.push(r.afterBalance < 0
-            ? { text: "Budget deficit", kind: "red" }
-            : { text: "Budget still positive", kind: "green" });
-          out.push(r.stressRatio >= 90
-            ? { text: "High budget stress", kind: "gold" }
-            : { text: "Moderate budget load", kind: "blue" });
-          return out;
-        },
-        story(r) {
-          return r.afterBalance < 0
-            ? `This household falls into deficit after the shock. In real life, that usually means cutting spending, borrowing, delaying payments, or leaning on family support.`
-            : `The household still stays above zero after the shock, but the margin is thinner. That makes the budget more fragile if another price increase appears.`;
-        },
-        insights(r) {
-          return [
-            `Base spending is about ${fmtMoney(r.baseTotal)} against income of ${fmtMoney(state.budgetIncome)}.`,
-            `After the shock, monthly spending rises to about ${fmtMoney(r.afterTotal)}, leaving a balance of ${fmtMoney(r.afterBalance)}.`,
-            `The household is using roughly ${fmtPct(r.stressRatio)} of monthly income after the shock.`
-          ];
-        },
-        chart(r) {
+        chart(r, s) {
           drawBarChart(
-            ["Income", "Base spending", "After shock", "After balance"],
-            [state.budgetIncome, r.baseTotal, r.afterTotal, r.afterBalance],
-            ["#2563eb", "#22c55e", "#ef4444", "#8b5cf6"],
-            "GH₵"
-          );
-        },
-        note: "This module is highly relatable because it turns macro pressure into everyday household trade-offs."
-      },
-
-      tax: {
-        label: "VAT / Tax Impact",
-        intro: "See how VAT and levies change the final consumer price.",
-        controls: [
-          { key: "basePrice", label: "Base price of item", min: 10, max: 1000, step: 5, type: "money" },
-          { key: "vatRate", label: "VAT rate", min: 0, max: 25, step: 0.5, type: "percent" },
-          { key: "levyRate", label: "Other levy / markup", min: 0, max: 15, step: 0.5, type: "percent" }
-        ],
-        compute(s) {
-          const vatAmount = s.basePrice * (s.vatRate / 100);
-          const levyAmount = s.basePrice * (s.levyRate / 100);
-          const finalPrice = s.basePrice + vatAmount + levyAmount;
-          const risePct = ((finalPrice - s.basePrice) / s.basePrice) * 100;
-          return {
-            vatAmount,
-            levyAmount,
-            finalPrice,
-            risePct
-          };
-        },
-        metrics(r) {
-          return [
-            { label: "VAT amount", value: fmtMoney(r.vatAmount) },
-            { label: "Levy amount", value: fmtMoney(r.levyAmount) },
-            { label: "Final price", value: fmtMoney(r.finalPrice) }
-          ];
-        },
-        badges(r) {
-          const out = [];
-          out.push(r.risePct >= 15
-            ? { text: "Noticeable price jump", kind: "red" }
-            : { text: "Mild tax burden", kind: "green" });
-          out.push({ text: "Consumer pays total tax", kind: "gold" });
-          return out;
-        },
-        story(r) {
-          return `Taxes and levies raise the final price even when the producer’s base price does not change. Consumers mostly notice the combined price, not the separate components.`;
-        },
-        insights(r) {
-          return [
-            `A base item price of ${fmtMoney(state.basePrice)} becomes ${fmtMoney(r.finalPrice)} after VAT and levies.`,
-            `VAT contributes ${fmtMoney(r.vatAmount)} while the extra levy adds ${fmtMoney(r.levyAmount)}.`,
-            `That is a total price increase of ${fmtPct(r.risePct)} on the original item.`
-          ];
-        },
-        chart(r) {
-          drawBarChart(
-            ["Base price", "VAT", "Levy", "Final price"],
-            [state.basePrice, r.vatAmount, r.levyAmount, r.finalPrice],
-            ["#2563eb", "#f59e0b", "#8b5cf6", "#ef4444"],
-            "GH₵"
-          );
-        },
-        note: "Useful for fiscal policy intuition and everyday price effects."
-      },
-
-      policy: {
-        label: "Monetary Policy",
-        intro: "Look at the gap between the policy rate and inflation, and what that can mean for borrowers and savers.",
-        controls: [
-          { key: "policyRate", label: "Policy rate", min: 5, max: 40, step: 0.5, type: "percent" },
-          { key: "inflationNow", label: "Current inflation", min: 0, max: 35, step: 0.5, type: "percent" },
-          { key: "loanAmount", label: "Loan amount", min: 1000, max: 50000, step: 500, type: "money" },
-          { key: "savingsAmount", label: "Savings amount", min: 1000, max: 50000, step: 500, type: "money" }
-        ],
-        compute(s) {
-          const realRate = s.policyRate - s.inflationNow;
-          const annualLoanCost = s.loanAmount * (s.policyRate / 100);
-          const realSavingsEffect = s.savingsAmount * (realRate / 100);
-          return {
-            realRate,
-            annualLoanCost,
-            realSavingsEffect
-          };
-        },
-        metrics(r) {
-          return [
-            { label: "Real rate gap", value: fmtPct(r.realRate) },
-            { label: "Annual loan cost", value: fmtMoney(r.annualLoanCost) },
-            { label: "Real savings effect", value: fmtMoney(r.realSavingsEffect) }
-          ];
-        },
-        badges(r) {
-          const out = [];
-          out.push(r.realRate >= 0
-            ? { text: "Positive real rate", kind: "green" }
-            : { text: "Negative real rate", kind: "red" });
-          out.push(state.policyRate >= 25
-            ? { text: "Tight policy stance", kind: "gold" }
-            : { text: "Less aggressive stance", kind: "blue" });
-          return out;
-        },
-        story(r) {
-          return r.realRate >= 0
-            ? `A policy rate above inflation usually signals a tighter stance. Borrowing becomes more expensive, but savers are less punished in real terms.`
-            : `If inflation is above the policy rate, real returns can still stay weak. Borrowing may feel cheaper in real terms, but inflation control is harder.`;
-        },
-        insights(r) {
-          return [
-            `With a policy rate of ${fmtPct(state.policyRate)} and inflation at ${fmtPct(state.inflationNow)}, the real rate is ${fmtPct(r.realRate)}.`,
-            `A loan of ${fmtMoney(state.loanAmount)} implies roughly ${fmtMoney(r.annualLoanCost)} in annual interest at this rate.`,
-            r.realSavingsEffect >= 0
-              ? `Savings of ${fmtMoney(state.savingsAmount)} gain about ${fmtMoney(r.realSavingsEffect)} in real terms.`
-              : `Savings of ${fmtMoney(state.savingsAmount)} lose about ${fmtMoney(Math.abs(r.realSavingsEffect))} in real terms.`
-          ];
-        },
-        chart(r) {
-          drawBarChart(
-            ["Policy rate", "Inflation", "Real rate", "Loan cost / 1000"],
-            [state.policyRate, state.inflationNow, r.realRate, r.annualLoanCost / 1000],
-            ["#2563eb", "#ef4444", "#22c55e", "#8b5cf6"],
+            ['Revenue', 'Expenditure', 'Interest', 'Capital', 'Deficit', 'Primary bal.'],
+            [s.revenue, s.expenditure, s.interestBurden, s.capitalSpending, r.deficit, r.primaryBalance],
+            ['#22c55e', '#ef4444', '#f59e0b', '#2563eb', '#111827', '#8b5cf6'],
             null
           );
+        }
+      },
+
+      monetary: {
+        label: 'Monetary Policy',
+        intro: 'Lectures 8-9: the financial sector, Bank of Ghana, monetary tools, cedi history, and IMF programme context.',
+        note: 'This tab is a simplified policy-transmission view, not a full macro model.',
+        scope: 'Built from the monetary policy slides, including the financial sector overview and Bank of Ghana policy operations.',
+        controls: [
+          { key: 'policyRate', label: 'Policy rate', min: 5, max: 40, step: 0.5, type: 'percent' },
+          { key: 'inflationTargetMid', label: 'Inflation target midpoint', min: 5, max: 20, step: 0.5, type: 'percent' },
+          { key: 'inflationActual', label: 'Actual inflation', min: 0, max: 35, step: 0.5, type: 'percent' },
+          { key: 'liquidityStance', label: 'Liquidity tightening stance', min: 0, max: 100, step: 1, type: 'percent' }
+        ],
+        compute(s) {
+          const realPolicyGap = s.policyRate - s.inflationActual;
+          const targetGap = s.inflationActual - s.inflationTargetMid;
+          const tighteningSignal = realPolicyGap + (s.liquidityStance / 10);
+          return { realPolicyGap, targetGap, tighteningSignal };
         },
-        note: "A clean way to link Bank of Ghana style policy changes to real life outcomes."
+        metrics(r) {
+          return [
+            { label: 'Real policy gap', value: fmtPercent(r.realPolicyGap) },
+            { label: 'Inflation vs target', value: fmtPercent(r.targetGap) },
+            { label: 'Tightening signal', value: r.tighteningSignal.toFixed(1) }
+          ];
+        },
+        badges(r) {
+          return [
+            r.targetGap > 0 ? { text: 'Inflation above target', kind: 'red' } : { text: 'Inflation near target', kind: 'green' },
+            r.tighteningSignal > 10 ? { text: 'Restrictive stance', kind: 'gold' } : { text: 'Milder stance', kind: 'blue' }
+          ];
+        },
+        story(r) {
+          return `The monetary policy lecture focuses on the Bank of Ghana and its tools. In this simulation, actual inflation differs from the target midpoint by ${fmtPercent(r.targetGap)}, so the model treats the policy stance as ${r.tighteningSignal > 10 ? 'restrictive' : 'less aggressive'}.`;
+        },
+        insights(r, s) {
+          return [
+            `A policy rate of ${fmtPercent(s.policyRate)} against inflation of ${fmtPercent(s.inflationActual)} gives a real policy gap of ${fmtPercent(r.realPolicyGap)}.`,
+            `Actual inflation is ${fmtPercent(r.targetGap)} away from the target midpoint, which is why the lecture cares about monetary tools and credibility.`,
+            `The tighter the liquidity stance, the stronger the signal that the central bank is trying to contain inflationary pressure.`
+          ];
+        },
+        facts: [
+          { k: 'Lecture parts', v: 'Financial sector, BoG operations, cedi history, IMF programme' },
+          { k: 'Bank of Ghana role', v: 'Uses monetary tools to influence the economy' },
+          { k: 'Inflation targeting', v: 'MPC target band discussed in the slides' },
+          { k: 'Broader actors', v: 'Commercial banks, rural banks, and other financial institutions matter too' }
+        ],
+        chart(r, s) {
+          drawBarChart(
+            ['Policy rate', 'Target mid', 'Actual infl.', 'Liquidity', 'Real gap', 'Signal'],
+            [s.policyRate, s.inflationTargetMid, s.inflationActual, s.liquidityStance / 2, r.realPolicyGap, r.tighteningSignal],
+            ['#2563eb', '#22c55e', '#ef4444', '#8b5cf6', '#111827', '#f59e0b'],
+            null
+          );
+        }
+      },
+
+      external: {
+        label: 'External Sector',
+        intro: 'Lectures 11-12: trade history, trade partners, balance of payments, importance of trade, and policy responses.',
+        note: 'This tab simplifies exports, imports, trade balance, and balance-of-payments pressure.',
+        scope: 'Built from the external sector slides on Ghana’s trade relations, exports and imports, and the balance of payments.',
+        controls: [
+          { key: 'exportsValue', label: 'Exports index', min: 5, max: 80, step: 1, type: 'number' },
+          { key: 'importsValue', label: 'Imports index', min: 5, max: 90, step: 1, type: 'number' },
+          { key: 'remittanceSupport', label: 'Remittance / transfer support', min: 0, max: 20, step: 0.5, type: 'number' },
+          { key: 'externalDebtService', label: 'External debt service pressure', min: 0, max: 20, step: 0.5, type: 'number' }
+        ],
+        compute(s) {
+          const tradeBalance = s.exportsValue - s.importsValue;
+          const bopPressure = tradeBalance + s.remittanceSupport - s.externalDebtService;
+          const importDependence = (s.importsValue / Math.max(s.exportsValue, 1)) * 100;
+          return { tradeBalance, bopPressure, importDependence };
+        },
+        metrics(r) {
+          return [
+            { label: 'Trade balance', value: r.tradeBalance.toFixed(1) },
+            { label: 'BOP pressure', value: r.bopPressure.toFixed(1) },
+            { label: 'Import dependence', value: fmtPercent(r.importDependence) }
+          ];
+        },
+        badges(r) {
+          return [
+            r.tradeBalance >= 0 ? { text: 'Trade surplus scenario', kind: 'green' } : { text: 'Trade deficit scenario', kind: 'red' },
+            r.bopPressure < 0 ? { text: 'External financing pressure', kind: 'gold' } : { text: 'Less external strain', kind: 'blue' }
+          ];
+        },
+        story(r) {
+          return `The external sector lecture links exports, imports, and the balance of payments. In this simulation, the trade balance is ${r.tradeBalance.toFixed(1)} and the broader external position is ${r.bopPressure.toFixed(1)}, so the external account is ${r.bopPressure < 0 ? 'under pressure' : 'less tight'}.`;
+        },
+        insights(r, s) {
+          return [
+            `Exports minus imports gives a trade balance of ${r.tradeBalance.toFixed(1)} in this simulation.`,
+            `Once remittance-like support and external debt service are added, the broad external pressure becomes ${r.bopPressure.toFixed(1)}.`,
+            `This is why the lecture treats trade partners, balance of payments, and trade policy as connected rather than separate topics.`
+          ];
+        },
+        facts: [
+          { k: 'Lecture parts', v: 'Trade history, partners, BOP, importance, policy' },
+          { k: 'Core trade idea', v: 'Exports and imports affect the economy' },
+          { k: 'BOP idea', v: 'Track credits and debits, not trade alone' },
+          { k: 'Policy angle', v: 'Trade policies address sector challenges' }
+        ],
+        chart(r, s) {
+          drawBarChart(
+            ['Exports', 'Imports', 'Trade bal.', 'Remittances', 'Debt service', 'BOP'],
+            [s.exportsValue, s.importsValue, r.tradeBalance, s.remittanceSupport, s.externalDebtService, r.bopPressure],
+            ['#22c55e', '#ef4444', '#111827', '#2563eb', '#f59e0b', '#8b5cf6'],
+            null
+          );
+        }
       }
     };
 
     const presets = {
-      studentAccra: {
-        label: "Student in Accra",
+      revisionBase: {
+        label: 'Baseline lecture view',
         apply() {
           Object.assign(state, {
-            inflationRate: 17,
-            wageGrowth: 4,
-            nominalIncome: 2500,
-            basketCost: 1300,
-            depreciationRate: 18,
-            importShare: 50,
-            passThrough: 60,
-            importBasket: 900,
-            fuelJump: 16,
-            fareSensitivity: 70,
-            foodTransportWeight: 35,
-            monthlyTransportSpend: 450,
-            monthlyFoodSpend: 850,
-            budgetIncome: 2500,
-            rent: 850,
-            food: 850,
-            transport: 450,
-            utilities: 180,
-            school: 250,
-            costShock: 14
+            consumption: 58, government: 18, investment: 21, exports: 17, imports: 24,
+            rainfallReliance: 78, irrigationUse: 42.6, agroProcessingGap: 68, foodImportBill: 2.0,
+            cpiGrowth: 18, foodInflation: 24, nonFoodInflation: 12, importedInflation: 16, localInflation: 19, monthlyInflation: 2.1,
+            revenue: 23, expenditure: 30, interestBurden: 7, capitalSpending: 6,
+            policyRate: 27, inflationTargetMid: 8, inflationActual: 18, liquidityStance: 62,
+            exportsValue: 34, importsValue: 42, remittanceSupport: 8, externalDebtService: 10
           });
         }
       },
-      highInflation: {
-        label: "High inflation year",
+      stressCase: {
+        label: 'Macro stress case',
         apply() {
           Object.assign(state, {
-            inflationRate: 29,
-            wageGrowth: 10,
-            nominalIncome: 3500,
-            basketCost: 1500,
-            costShock: 24,
-            inflationNow: 28,
-            policyRate: 30
+            imports: 30, foodImportBill: 3.2, foodInflation: 30, importedInflation: 24,
+            expenditure: 34, interestBurden: 9, inflationActual: 24, policyRate: 30,
+            importsValue: 50, externalDebtService: 13
           });
         }
       },
-      cediShock: {
-        label: "Cedi weakens sharply",
+      reformCase: {
+        label: 'Policy improvement case',
         apply() {
           Object.assign(state, {
-            baseExchangeRate: 15.5,
-            depreciationRate: 32,
-            importShare: 65,
-            passThrough: 78,
-            importBasket: 1200
+            irrigationUse: 58, agroProcessingGap: 42, foodImportBill: 1.4,
+            cpiGrowth: 11, foodInflation: 13, nonFoodInflation: 9, monthlyInflation: 1.1,
+            revenue: 27, expenditure: 28, interestBurden: 5,
+            policyRate: 20, inflationActual: 10,
+            exportsValue: 43, importsValue: 39, remittanceSupport: 9, externalDebtService: 8
           });
         }
       },
-      fuelShock: {
-        label: "Fuel price jump",
+      examCrunch: {
+        label: 'Exam-cram mode',
         apply() {
+          state.currentModule = 'nationalIncome';
           Object.assign(state, {
-            fuelJump: 30,
-            fareSensitivity: 74,
-            foodTransportWeight: 50,
-            monthlyTransportSpend: 500,
-            monthlyFoodSpend: 1000
-          });
-        }
-      },
-      vatShock: {
-        label: "VAT / levy pressure",
-        apply() {
-          Object.assign(state, {
-            basePrice: 120,
-            vatRate: 15,
-            levyRate: 5
-          });
-        }
-      },
-      stable: {
-        label: "More stable scenario",
-        apply() {
-          Object.assign(state, {
-            inflationRate: 10,
-            wageGrowth: 12,
-            nominalIncome: 3200,
-            basketCost: 1400,
-            depreciationRate: 8,
-            importShare: 42,
-            passThrough: 45,
-            importBasket: 1000,
-            fuelJump: 8,
-            fareSensitivity: 45,
-            foodTransportWeight: 25,
-            monthlyTransportSpend: 380,
-            monthlyFoodSpend: 850,
-            budgetIncome: 3200,
-            rent: 950,
-            food: 850,
-            transport: 380,
-            utilities: 220,
-            school: 300,
-            costShock: 8,
-            basePrice: 100,
-            vatRate: 15,
-            levyRate: 2,
-            policyRate: 22,
-            inflationNow: 12
+            consumption: 60, government: 16, investment: 19, exports: 18, imports: 25,
+            policyRate: 27, inflationActual: 18, inflationTargetMid: 8,
+            revenue: 22, expenditure: 31,
+            exportsValue: 33, importsValue: 44
           });
         }
       }
     };
 
-    const tabsEl = document.getElementById("tabs");
-    const presetsEl = document.getElementById("presets");
-    const controlsEl = document.getElementById("controls");
-    const controlsIntroEl = document.getElementById("controlsIntro");
-    const moduleTitleEl = document.getElementById("moduleTitle");
-    const moduleNoteEl = document.getElementById("moduleNote");
-    const badgesEl = document.getElementById("badges");
-    const metricsEl = document.getElementById("metrics");
-    const insightsEl = document.getElementById("insights");
-    const storyEl = document.getElementById("story");
-    const canvas = document.getElementById("chart");
-    const ctx = canvas.getContext("2d");
+    const tabsEl = document.getElementById('tabs');
+    const presetsEl = document.getElementById('presets');
+    const controlsEl = document.getElementById('controls');
+    const controlsIntroEl = document.getElementById('controlsIntro');
+    const scopeNoteEl = document.getElementById('scopeNote');
+    const moduleTitleEl = document.getElementById('moduleTitle');
+    const moduleNoteEl = document.getElementById('moduleNote');
+    const badgesEl = document.getElementById('badges');
+    const metricsEl = document.getElementById('metrics');
+    const storyEl = document.getElementById('story');
+    const insightsEl = document.getElementById('insights');
+    const factsEl = document.getElementById('facts');
+    const canvas = document.getElementById('chart');
+    const ctx = canvas.getContext('2d');
 
-    function fmtMoney(v) {
-      return money.format(v);
-    }
-
-    function fmtPct(v) {
-      return `${Number(v).toFixed(1)}%`;
-    }
-
-    function fmtControlValue(control, value) {
-      if (control.type === "money") return fmtMoney(value);
-      if (control.type === "percent") return fmtPct(value);
-      if (control.key === "baseExchangeRate") return `${value.toFixed(1)} GH₵/$`;
-      return Number(value).toFixed(control.step < 1 ? 1 : 0);
+    function fmtPercent(v) { return `${Number(v).toFixed(1)}%`; }
+    function fmtValue(control, v) {
+      if (control.type === 'money') return money.format(v);
+      if (control.type === 'percent') return fmtPercent(v);
+      if (control.type === 'dollarbn') return `$${Number(v).toFixed(1)}bn`;
+      return Number(v).toFixed(control.step < 1 ? 1 : 0);
     }
 
     function renderTabs() {
-      tabsEl.innerHTML = "";
+      tabsEl.innerHTML = '';
       Object.entries(modules).forEach(([key, mod]) => {
-        const btn = document.createElement("button");
-        btn.className = `tab ${state.currentModule === key ? "active" : ""}`;
+        const btn = document.createElement('button');
+        btn.className = `tab ${state.currentModule === key ? 'active' : ''}`;
         btn.textContent = mod.label;
-        btn.onclick = () => {
-          state.currentModule = key;
-          renderAll();
-        };
+        btn.onclick = () => { state.currentModule = key; renderAll(); };
         tabsEl.appendChild(btn);
       });
     }
 
     function renderPresets() {
-      presetsEl.innerHTML = "";
-      Object.entries(presets).forEach(([key, preset]) => {
-        const btn = document.createElement("button");
-        btn.className = "preset";
+      presetsEl.innerHTML = '';
+      Object.values(presets).forEach((preset) => {
+        const btn = document.createElement('button');
+        btn.className = 'preset';
         btn.textContent = preset.label;
-        btn.onclick = () => {
-          preset.apply();
-          renderAll();
-        };
+        btn.onclick = () => { preset.apply(); renderAll(); };
         presetsEl.appendChild(btn);
       });
     }
 
     function renderControls() {
-      const module = modules[state.currentModule];
-      controlsIntroEl.textContent = module.intro;
-      controlsEl.innerHTML = "";
-
-      module.controls.forEach((control) => {
-        const wrap = document.createElement("div");
-        wrap.className = "control";
-
-        const top = document.createElement("div");
-        top.className = "control-top";
-
-        const label = document.createElement("label");
-        label.setAttribute("for", control.key);
-        label.textContent = control.label;
-
-        const value = document.createElement("div");
-        value.className = "control-value";
-        value.id = `${control.key}-value`;
-        value.textContent = fmtControlValue(control, state[control.key]);
-
-        top.appendChild(label);
-        top.appendChild(value);
-
-        const input = document.createElement("input");
-        input.type = "range";
-        input.id = control.key;
-        input.min = control.min;
-        input.max = control.max;
-        input.step = control.step;
-        input.value = state[control.key];
-        input.oninput = (e) => {
+      const mod = modules[state.currentModule];
+      controlsIntroEl.textContent = mod.intro;
+      scopeNoteEl.textContent = mod.scope;
+      controlsEl.innerHTML = '';
+      mod.controls.forEach((control) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'control';
+        wrap.innerHTML = `
+          <div class="control-top">
+            <label for="${control.key}">${control.label}</label>
+            <div class="value" id="${control.key}-v">${fmtValue(control, state[control.key])}</div>
+          </div>
+          <input type="range" id="${control.key}" min="${control.min}" max="${control.max}" step="${control.step}" value="${state[control.key]}" />
+        `;
+        wrap.querySelector('input').addEventListener('input', (e) => {
           state[control.key] = Number(e.target.value);
-          document.getElementById(`${control.key}-value`).textContent = fmtControlValue(control, state[control.key]);
+          document.getElementById(`${control.key}-v`).textContent = fmtValue(control, state[control.key]);
           renderModule();
-        };
-
-        wrap.appendChild(top);
-        wrap.appendChild(input);
+        });
         controlsEl.appendChild(wrap);
       });
     }
 
     function renderModule() {
-      const module = modules[state.currentModule];
-      const results = module.compute(state);
+      const mod = modules[state.currentModule];
+      const results = mod.compute(state);
+      moduleTitleEl.textContent = mod.label;
+      moduleNoteEl.textContent = mod.note;
 
-      moduleTitleEl.textContent = module.label;
-      moduleNoteEl.textContent = module.note;
-
-      badgesEl.innerHTML = "";
-      module.badges(results).forEach((b) => {
-        const badge = document.createElement("div");
-        badge.className = `badge ${b.kind}`;
-        badge.textContent = b.text;
-        badgesEl.appendChild(badge);
+      badgesEl.innerHTML = '';
+      mod.badges(results, state).forEach((b) => {
+        const div = document.createElement('div');
+        div.className = `badge ${b.kind}`;
+        div.textContent = b.text;
+        badgesEl.appendChild(div);
       });
 
-      metricsEl.innerHTML = "";
-      module.metrics(results).forEach((m) => {
-        const card = document.createElement("div");
-        card.className = "metric";
-        card.innerHTML = `
-          <div class="metric-label">${m.label}</div>
-          <div class="metric-value">${m.value}</div>
-        `;
+      metricsEl.innerHTML = '';
+      mod.metrics(results, state).forEach((m) => {
+        const card = document.createElement('div');
+        card.className = 'metric';
+        card.innerHTML = `<div class="metric-label">${m.label}</div><div class="metric-value">${m.value}</div>`;
         metricsEl.appendChild(card);
       });
 
-      insightsEl.innerHTML = "";
-      module.insights(results).forEach((text) => {
-        const li = document.createElement("li");
-        li.className = "insight-item";
+      storyEl.textContent = mod.story(results, state);
+
+      insightsEl.innerHTML = '';
+      mod.insights(results, state).forEach((text) => {
+        const li = document.createElement('li');
         li.textContent = text;
         insightsEl.appendChild(li);
       });
 
-      storyEl.textContent = module.story(results);
-      module.chart(results);
+      factsEl.innerHTML = '';
+      mod.facts.forEach((fact) => {
+        const div = document.createElement('div');
+        div.className = 'fact';
+        div.innerHTML = `<strong>${fact.k}</strong>${fact.v}`;
+        factsEl.appendChild(div);
+      });
+
+      mod.chart(results, state);
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawBarChart(labels, values, colors, moneyMode) {
+      clearCanvas();
+      const W = canvas.width, H = canvas.height;
+      const m = { top: 28, right: 28, bottom: 80, left: 74 };
+      const chartW = W - m.left - m.right;
+      const chartH = H - m.top - m.bottom;
+      const minVal = Math.min(0, ...values);
+      const maxVal = Math.max(0, ...values);
+      const span = maxVal - minVal || 1;
+      const barGap = 18;
+      const barW = (chartW - barGap * (labels.length - 1)) / labels.length;
+      const yScale = (v) => m.top + ((maxVal - v) / span) * chartH;
+      const zeroY = yScale(0);
+
+      ctx.strokeStyle = '#dbe5f0';
+      ctx.lineWidth = 1;
+      ctx.fillStyle = '#334155';
+      ctx.font = '12px Arial';
+
+      for (let i = 0; i <= 5; i++) {
+        const v = minVal + (span * i / 5);
+        const y = yScale(v);
+        ctx.beginPath();
+        ctx.moveTo(m.left, y);
+        ctx.lineTo(W - m.right, y);
+        ctx.stroke();
+        ctx.fillText(moneyMode ? compact.format(v) : v.toFixed(1), 10, y + 4);
+      }
+
+      ctx.strokeStyle = '#111827';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(m.left, zeroY);
+      ctx.lineTo(W - m.right, zeroY);
+      ctx.stroke();
+
+      labels.forEach((label, i) => {
+        const x = m.left + i * (barW + barGap);
+        const y = yScale(values[i]);
+        const h = Math.abs(zeroY - y);
+        ctx.fillStyle = colors[i] || '#2563eb';
+        ctx.fillRect(x, Math.min(y, zeroY), barW, Math.max(h, 2));
+        ctx.fillStyle = '#111827';
+        ctx.textAlign = 'center';
+        ctx.font = '12px Arial';
+        const text = moneyMode ? compact.format(values[i]) : values[i].toFixed(1);
+        ctx.fillText(text, x + barW / 2, Math.min(y, zeroY) - 8);
+        ctx.fillText(label, x + barW / 2, H - 34);
+      });
+
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#111827';
+      ctx.font = 'bold 14px Arial';
+      ctx.fillText('Concept chart', m.left, 18);
     }
 
     function renderAll() {
@@ -1090,90 +871,6 @@
       renderPresets();
       renderControls();
       renderModule();
-    }
-
-    function clearCanvas() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
-
-    function drawBarChart(labels, values, colors, suffix) {
-      clearCanvas();
-
-      const W = canvas.width;
-      const H = canvas.height;
-      const m = { top: 28, right: 28, bottom: 74, left: 70 };
-      const chartW = W - m.left - m.right;
-      const chartH = H - m.top - m.bottom;
-
-      const minVal = Math.min(0, ...values);
-      const maxVal = Math.max(0, ...values);
-      const span = maxVal - minVal || 1;
-
-      function yScale(v) {
-        return m.top + ((maxVal - v) / span) * chartH;
-      }
-
-      const zeroY = yScale(0);
-
-      ctx.strokeStyle = "#dbe5f0";
-      ctx.lineWidth = 1;
-      ctx.font = "12px Arial";
-      ctx.fillStyle = "#334155";
-
-      for (let i = 0; i <= 5; i++) {
-        const v = minVal + (span * i) / 5;
-        const y = yScale(v);
-
-        ctx.beginPath();
-        ctx.moveTo(m.left, y);
-        ctx.lineTo(W - m.right, y);
-        ctx.stroke();
-
-        let label;
-        if (suffix === "GH₵") {
-          label = `${Math.round(v)}`;
-        } else {
-          label = Number(v).toFixed(1);
-        }
-        ctx.fillText(label, 12, y + 4);
-      }
-
-      ctx.strokeStyle = "#111827";
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(m.left, zeroY);
-      ctx.lineTo(W - m.right, zeroY);
-      ctx.stroke();
-
-      const barGap = 28;
-      const barWidth = (chartW - barGap * (labels.length - 1)) / labels.length;
-
-      labels.forEach((label, i) => {
-        const x = m.left + i * (barWidth + barGap);
-        const y = yScale(values[i]);
-        const height = Math.abs(zeroY - y);
-
-        ctx.fillStyle = colors[i] || "#2563eb";
-        ctx.fillRect(x, Math.min(y, zeroY), barWidth, Math.max(height, 2));
-
-        ctx.fillStyle = "#111827";
-        ctx.font = "12px Arial";
-        ctx.textAlign = "center";
-
-        const valueText = suffix === "GH₵"
-          ? `${Math.round(values[i])}`
-          : values[i].toFixed(1);
-
-        ctx.fillText(valueText, x + barWidth / 2, Math.min(y, zeroY) - 8);
-        ctx.fillText(label, x + barWidth / 2, H - 34);
-      });
-
-      ctx.textAlign = "left";
-      ctx.fillStyle = "#111827";
-      ctx.font = "bold 14px Arial";
-      ctx.fillText("Scenario chart", m.left, 18);
     }
 
     renderAll();
