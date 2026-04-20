@@ -3,84 +3,1180 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Economics Visual Lab</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Ghana Economy Lab</title>
+  <style>
+    :root {
+      --bg: #07121f;
+      --panel: #0f1c2d;
+      --card: #14263d;
+      --card-2: #0b1727;
+      --text: #eef4ff;
+      --muted: #aebfd8;
+      --line: #243c5d;
+      --gold: #f4b400;
+      --green: #22c55e;
+      --red: #ef4444;
+      --blue: #3b82f6;
+      --purple: #8b5cf6;
+      --shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #07121f, #0e2038, #122845);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      width: min(1380px, 94%);
+      margin: 0 auto;
+      padding: 24px 0 40px;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 2.15rem;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 780px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 16px;
+      border-radius: 999px;
+      background: rgba(244, 180, 0, 0.12);
+      border: 1px solid rgba(244, 180, 0, 0.24);
+      color: #ffe08a;
+      font-weight: 700;
+    }
+
+    .topbar {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .tabs,
+    .presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tab,
+    .preset {
+      border: 1px solid var(--line);
+      background: rgba(20, 38, 61, 0.9);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .tab:hover,
+    .preset:hover {
+      transform: translateY(-1px);
+      border-color: var(--gold);
+    }
+
+    .tab.active {
+      background: rgba(244, 180, 0, 0.16);
+      border-color: rgba(244, 180, 0, 0.38);
+      color: #ffe08a;
+    }
+
+    .preset {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.25);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 340px 1fr 320px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(15, 28, 45, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 1.18rem;
+    }
+
+    .subtext {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .control {
+      margin-bottom: 16px;
+      padding: 12px;
+      background: rgba(11, 23, 39, 0.92);
+      border: 1px solid rgba(36, 60, 93, 0.9);
+      border-radius: 14px;
+    }
+
+    .control-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .control label {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .control-value {
+      color: #ffe08a;
+      font-weight: 800;
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold);
+    }
+
+    .visual-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .module-title {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .module-note {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 800;
+      border: 1px solid transparent;
+    }
+
+    .badge.gold {
+      color: #ffe08a;
+      background: rgba(244, 180, 0, 0.12);
+      border-color: rgba(244, 180, 0, 0.24);
+    }
+
+    .badge.green {
+      color: #b8f3c8;
+      background: rgba(34, 197, 94, 0.12);
+      border-color: rgba(34, 197, 94, 0.24);
+    }
+
+    .badge.red {
+      color: #ffc0c0;
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.24);
+    }
+
+    .badge.blue {
+      color: #cde1ff;
+      background: rgba(59, 130, 246, 0.12);
+      border-color: rgba(59, 130, 246, 0.24);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .metric {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(11, 23, 39, 0.95);
+      border: 1px solid rgba(36, 60, 93, 0.9);
+      transition: transform 0.18s ease;
+    }
+
+    .metric:hover {
+      transform: translateY(-2px);
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .chart-card {
+      background: rgba(7, 18, 31, 0.92);
+      border: 1px solid rgba(36, 60, 93, 0.9);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    canvas {
+      width: 100%;
+      display: block;
+      background: #ffffff;
+      border-radius: 14px;
+    }
+
+    .insight-box,
+    .story-box {
+      background: rgba(11, 23, 39, 0.95);
+      border: 1px solid rgba(36, 60, 93, 0.9);
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .insight-box h3,
+    .story-box h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .insight-list {
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .insight-item {
+      color: var(--muted);
+      line-height: 1.52;
+      padding-left: 14px;
+      position: relative;
+    }
+
+    .insight-item::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--gold);
+      position: absolute;
+      left: 0;
+      top: 8px;
+    }
+
+    .story-box p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.58;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1180px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
+  <div class="wrap">
+    <section class="hero">
       <div>
-        <h1>Economics Visual Lab</h1>
-        <p>Interactive Demand, Supply, and Tax Simulator</p>
+        <h1>Ghana Economy Lab</h1>
+        <p>
+          An interactive Ghana-focused economics playground. Switch between inflation, cedi depreciation,
+          fuel and transport pressure, household budgets, VAT impact, and monetary policy. Move sliders,
+          test presets, and see the economy story change live.
+        </p>
       </div>
-      <a class="back-link" href="https://github.com/lillifeofcisco/Ecomath">View repo</a>
-    </header>
+      <div class="hero-badge">Ghana presets • Live visuals • Plain-English insights</div>
+    </section>
+
+    <section class="topbar">
+      <div class="tabs" id="tabs"></div>
+      <div class="presets" id="presets"></div>
+    </section>
 
     <main class="layout">
-      <section class="panel controls">
+      <section class="panel">
         <h2>Controls</h2>
+        <p class="subtext" id="controlsIntro">Adjust the current module and watch the results change.</p>
+        <div id="controls"></div>
+      </section>
 
-        <div class="control">
-          <label for="a">Demand intercept (a): <span id="aVal"></span></label>
-          <input type="range" id="a" min="20" max="200" value="120" />
+      <section class="panel">
+        <div class="visual-top">
+          <div>
+            <h2 class="module-title" id="moduleTitle"></h2>
+            <p class="module-note" id="moduleNote"></p>
+          </div>
+          <div class="badge-row" id="badges"></div>
         </div>
 
-        <div class="control">
-          <label for="b">Demand slope (b): <span id="bVal"></span></label>
-          <input type="range" id="b" min="1" max="10" step="0.1" value="2" />
+        <section class="metrics" id="metrics"></section>
+
+        <div class="chart-card">
+          <canvas id="chart" width="760" height="430"></canvas>
         </div>
 
-        <div class="control">
-          <label for="c">Supply intercept (c): <span id="cVal"></span></label>
-          <input type="range" id="c" min="-50" max="100" value="20" />
-        </div>
-
-        <div class="control">
-          <label for="d">Supply slope (d): <span id="dVal"></span></label>
-          <input type="range" id="d" min="1" max="10" step="0.1" value="2" />
-        </div>
-
-        <div class="control">
-          <label for="tax">Per-unit tax (t): <span id="taxVal"></span></label>
-          <input type="range" id="tax" min="0" max="50" step="1" value="10" />
-        </div>
-
-        <div class="equations">
-          <h3>Model</h3>
-          <p id="demandEq"></p>
-          <p id="supplyEq"></p>
-          <p id="taxSupplyEq"></p>
+        <div class="story-box">
+          <h3>What this means</h3>
+          <p id="story"></p>
         </div>
       </section>
 
-      <section class="panel graph-panel">
-        <h2>Graph</h2>
-        <canvas id="graph" width="760" height="520"></canvas>
+      <section class="panel">
+        <h2>Insights</h2>
+        <p class="subtext">Plain-English output for the current scenario.</p>
+        <div class="insight-box">
+          <h3>Key takeaways</h3>
+          <ul class="insight-list" id="insights"></ul>
+        </div>
+        <p class="footer-note">
+          Use the presets to simulate a student in Accra, a cedi shock, a fuel shock, or a high inflation period.
+        </p>
       </section>
     </main>
-
-    <section class="results">
-      <div class="card">
-        <h3>Before Tax</h3>
-        <p>Equilibrium Price: <strong id="pStar"></strong></p>
-        <p>Equilibrium Quantity: <strong id="qStar"></strong></p>
-      </div>
-
-      <div class="card">
-        <h3>After Tax</h3>
-        <p>Consumer Price: <strong id="pc"></strong></p>
-        <p>Producer Price: <strong id="pp"></strong></p>
-        <p>Quantity: <strong id="qt"></strong></p>
-      </div>
-
-      <div class="card">
-        <h3>Tax Burden</h3>
-        <p>Consumers bear: <strong id="consumerBurden"></strong></p>
-        <p>Producers bear: <strong id="producerBurden"></strong></p>
-      </div>
-    </section>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    const money = new Intl.NumberFormat("en-GH", {
+      style: "currency",
+      currency: "GHS",
+      maximumFractionDigits: 0
+    });
+
+    const state = {
+      currentModule: "inflation",
+
+      inflationRate: 18,
+      wageGrowth: 8,
+      nominalIncome: 3200,
+      basketCost: 1500,
+
+      baseExchangeRate: 15.5,
+      depreciationRate: 20,
+      importShare: 55,
+      passThrough: 65,
+      importBasket: 1200,
+
+      fuelJump: 18,
+      fareSensitivity: 65,
+      foodTransportWeight: 40,
+      monthlyTransportSpend: 420,
+      monthlyFoodSpend: 900,
+
+      budgetIncome: 3200,
+      rent: 950,
+      food: 900,
+      transport: 420,
+      utilities: 220,
+      school: 300,
+      costShock: 15,
+
+      basePrice: 100,
+      vatRate: 15,
+      levyRate: 3,
+
+      policyRate: 27,
+      inflationNow: 18,
+      loanAmount: 10000,
+      savingsAmount: 8000
+    };
+
+    const modules = {
+      inflation: {
+        label: "Inflation",
+        intro: "See how price growth changes real income and purchasing power.",
+        controls: [
+          { key: "nominalIncome", label: "Monthly income", min: 1000, max: 12000, step: 100, type: "money" },
+          { key: "inflationRate", label: "Inflation rate", min: 0, max: 45, step: 0.5, type: "percent" },
+          { key: "wageGrowth", label: "Wage growth", min: 0, max: 35, step: 0.5, type: "percent" },
+          { key: "basketCost", label: "Base monthly basket", min: 500, max: 5000, step: 50, type: "money" }
+        ],
+        compute(s) {
+          const realIncome = s.nominalIncome / (1 + s.inflationRate / 100);
+          const newBasketCost = s.basketCost * (1 + s.inflationRate / 100);
+          const purchasingPowerLoss = s.nominalIncome - realIncome;
+          const wageGap = s.wageGrowth - s.inflationRate;
+          const affordability = s.nominalIncome - newBasketCost;
+          return {
+            realIncome,
+            newBasketCost,
+            purchasingPowerLoss,
+            wageGap,
+            affordability
+          };
+        },
+        metrics(r) {
+          return [
+            { label: "Real monthly income", value: fmtMoney(r.realIncome) },
+            { label: "New basket cost", value: fmtMoney(r.newBasketCost) },
+            { label: "Wage gap", value: fmtPct(r.wageGap) }
+          ];
+        },
+        badges(r) {
+          const out = [];
+          out.push(r.wageGap >= 0
+            ? { text: "Wages keeping up", kind: "green" }
+            : { text: "Real income under pressure", kind: "red" });
+          out.push(r.newBasketCost > state.basketCost
+            ? { text: "Prices rising", kind: "gold" }
+            : { text: "Stable prices", kind: "green" });
+          return out;
+        },
+        story(r) {
+          return r.wageGap >= 0
+            ? `Prices are rising, but wage growth is at least matching inflation. Real pressure is milder in this scenario, even though the monthly basket still costs more than before.`
+            : `Prices are rising faster than wages. That means the same income now buys less, and the household feels squeezed even if the nominal salary did not change.`;
+        },
+        insights(r) {
+          return [
+            `At ${fmtPct(state.inflationRate)}, a basket that used to cost ${fmtMoney(state.basketCost)} now costs about ${fmtMoney(r.newBasketCost)}.`,
+            `Real income falls to roughly ${fmtMoney(r.realIncome)} even though nominal income stays at ${fmtMoney(state.nominalIncome)}.`,
+            r.wageGap >= 0
+              ? `Wage growth is ahead of inflation by ${fmtPct(r.wageGap)}, so households are better protected.`
+              : `Wage growth is behind inflation by ${fmtPct(Math.abs(r.wageGap))}, so purchasing power is falling.`
+          ];
+        },
+        chart(r) {
+          drawBarChart(
+            ["Nominal income", "Real income", "Old basket", "New basket"],
+            [state.nominalIncome, r.realIncome, state.basketCost, r.newBasketCost],
+            ["#2563eb", "#22c55e", "#f59e0b", "#ef4444"],
+            "GH₵"
+          );
+        },
+        note: "Good for teaching why people can earn the same amount of money but still feel poorer."
+      },
+
+      cedi: {
+        label: "Cedi Depreciation",
+        intro: "Explore how a weaker cedi can push up imported prices and household pressure.",
+        controls: [
+          { key: "baseExchangeRate", label: "Starting exchange rate (GH₵/$)", min: 8, max: 25, step: 0.1, type: "number" },
+          { key: "depreciationRate", label: "Cedi depreciation", min: 0, max: 60, step: 0.5, type: "percent" },
+          { key: "importShare", label: "Import share in spending", min: 10, max: 90, step: 1, type: "percent" },
+          { key: "passThrough", label: "Pass-through to prices", min: 10, max: 100, step: 1, type: "percent" },
+          { key: "importBasket", label: "Imported goods basket", min: 300, max: 4000, step: 50, type: "money" }
+        ],
+        compute(s) {
+          const newRate = s.baseExchangeRate * (1 + s.depreciationRate / 100);
+          const importedPriceIncreasePct = (s.depreciationRate * s.passThrough) / 100;
+          const newImportBasket = s.importBasket * (1 + importedPriceIncreasePct / 100);
+          const generalPressurePct = (s.importShare * importedPriceIncreasePct) / 100;
+          return {
+            newRate,
+            importedPriceIncreasePct,
+            newImportBasket,
+            generalPressurePct
+          };
+        },
+        metrics(r) {
+          return [
+            { label: "New exchange rate", value: `${r.newRate.toFixed(2)} GH₵/$` },
+            { label: "Imported goods pressure", value: fmtPct(r.importedPriceIncreasePct) },
+            { label: "New import basket", value: fmtMoney(r.newImportBasket) }
+          ];
+        },
+        badges(r) {
+          const out = [];
+          out.push(r.importedPriceIncreasePct >= 15
+            ? { text: "Imported inflation risk", kind: "red" }
+            : { text: "Moderate external pressure", kind: "blue" });
+          out.push(r.generalPressurePct >= 8
+            ? { text: "Broad household impact", kind: "gold" }
+            : { text: "Contained spillover", kind: "green" });
+          return out;
+        },
+        story(r) {
+          return `When the cedi weakens, imported goods become more expensive in local currency. The stronger the pass-through and the higher the import share, the more households feel the price shock in daily life.`;
+        },
+        insights(r) {
+          return [
+            `An exchange rate of ${state.baseExchangeRate.toFixed(2)} GH₵/$ becomes about ${r.newRate.toFixed(2)} GH₵/$ after the depreciation shock.`,
+            `With pass-through at ${fmtPct(state.passThrough)}, the imported basket rises from ${fmtMoney(state.importBasket)} to roughly ${fmtMoney(r.newImportBasket)}.`,
+            `Because imports make up ${fmtPct(state.importShare)} of spending, the broader household pressure is about ${fmtPct(r.generalPressurePct)}.`
+          ];
+        },
+        chart(r) {
+          drawBarChart(
+            ["Old FX rate", "New FX rate", "Old import basket", "New import basket"],
+            [state.baseExchangeRate, r.newRate, state.importBasket, r.newImportBasket],
+            ["#2563eb", "#ef4444", "#22c55e", "#f59e0b"],
+            null
+          );
+        },
+        note: "Good for showing why a currency shock can end up in market prices, especially for imported items."
+      },
+
+      transport: {
+        label: "Fuel & Transport",
+        intro: "Trace the pass-through from fuel prices to transport fares and food costs.",
+        controls: [
+          { key: "fuelJump", label: "Fuel price increase", min: 0, max: 60, step: 0.5, type: "percent" },
+          { key: "fareSensitivity", label: "Transport fare sensitivity", min: 10, max: 100, step: 1, type: "percent" },
+          { key: "foodTransportWeight", label: "Food reliance on transport", min: 5, max: 80, step: 1, type: "percent" },
+          { key: "monthlyTransportSpend", label: "Monthly transport spend", min: 100, max: 2000, step: 20, type: "money" },
+          { key: "monthlyFoodSpend", label: "Monthly food spend", min: 200, max: 4000, step: 20, type: "money" }
+        ],
+        compute(s) {
+          const fareIncreasePct = (s.fuelJump * s.fareSensitivity) / 100;
+          const extraTransport = s.monthlyTransportSpend * (fareIncreasePct / 100);
+          const foodIncreasePct = (fareIncreasePct * s.foodTransportWeight) / 100;
+          const extraFood = s.monthlyFoodSpend * (foodIncreasePct / 100);
+          const totalExtra = extraTransport + extraFood;
+          return {
+            fareIncreasePct,
+            extraTransport,
+            foodIncreasePct,
+            extraFood,
+            totalExtra
+          };
+        },
+        metrics(r) {
+          return [
+            { label: "Fare increase", value: fmtPct(r.fareIncreasePct) },
+            { label: "Extra transport cost", value: fmtMoney(r.extraTransport) },
+            { label: "Total monthly pressure", value: fmtMoney(r.totalExtra) }
+          ];
+        },
+        badges(r) {
+          const out = [];
+          out.push(r.totalExtra >= 200
+            ? { text: "Commuter pressure rising", kind: "red" }
+            : { text: "Manageable fare impact", kind: "green" });
+          out.push(r.foodIncreasePct >= 6
+            ? { text: "Food spillover likely", kind: "gold" }
+            : { text: "Limited food spillover", kind: "blue" });
+          return out;
+        },
+        story(r) {
+          return `Fuel shocks rarely stop at the pump. They usually feed into transport fares, and when food distribution relies heavily on transport, market prices can move too.`;
+        },
+        insights(r) {
+          return [
+            `A fuel jump of ${fmtPct(state.fuelJump)} produces an estimated fare increase of ${fmtPct(r.fareIncreasePct)} under the current sensitivity setting.`,
+            `Monthly transport spending rises by about ${fmtMoney(r.extraTransport)} from its base of ${fmtMoney(state.monthlyTransportSpend)}.`,
+            `Food costs also rise by around ${fmtPct(r.foodIncreasePct)}, adding roughly ${fmtMoney(r.extraFood)} to the monthly food bill.`
+          ];
+        },
+        chart(r) {
+          drawBarChart(
+            ["Base transport", "After shock", "Base food", "After spillover"],
+            [
+              state.monthlyTransportSpend,
+              state.monthlyTransportSpend + r.extraTransport,
+              state.monthlyFoodSpend,
+              state.monthlyFoodSpend + r.extraFood
+            ],
+            ["#2563eb", "#ef4444", "#22c55e", "#f59e0b"],
+            "GH₵"
+          );
+        },
+        note: "Very useful for showing why fuel matters beyond transport alone."
+      },
+
+      budget: {
+        label: "Household Budget",
+        intro: "Test how a Ghanaian monthly budget reacts to a broad cost shock.",
+        controls: [
+          { key: "budgetIncome", label: "Monthly income", min: 1000, max: 12000, step: 100, type: "money" },
+          { key: "rent", label: "Rent", min: 200, max: 3000, step: 50, type: "money" },
+          { key: "food", label: "Food", min: 200, max: 3000, step: 50, type: "money" },
+          { key: "transport", label: "Transport", min: 100, max: 1500, step: 20, type: "money" },
+          { key: "utilities", label: "Utilities", min: 50, max: 1000, step: 10, type: "money" },
+          { key: "school", label: "School / personal", min: 50, max: 1500, step: 20, type: "money" },
+          { key: "costShock", label: "General cost shock", min: 0, max: 35, step: 0.5, type: "percent" }
+        ],
+        compute(s) {
+          const baseTotal = s.rent + s.food + s.transport + s.utilities + s.school;
+
+          const afterRent = s.rent * (1 + (s.costShock * 0.30) / 100);
+          const afterFood = s.food * (1 + (s.costShock * 1.00) / 100);
+          const afterTransport = s.transport * (1 + (s.costShock * 0.80) / 100);
+          const afterUtilities = s.utilities * (1 + (s.costShock * 0.50) / 100);
+          const afterSchool = s.school * (1 + (s.costShock * 0.35) / 100);
+
+          const afterTotal = afterRent + afterFood + afterTransport + afterUtilities + afterSchool;
+          const beforeBalance = s.budgetIncome - baseTotal;
+          const afterBalance = s.budgetIncome - afterTotal;
+          const stressRatio = (afterTotal / s.budgetIncome) * 100;
+
+          return {
+            baseTotal,
+            afterTotal,
+            beforeBalance,
+            afterBalance,
+            stressRatio,
+            afterRent,
+            afterFood,
+            afterTransport,
+            afterUtilities,
+            afterSchool
+          };
+        },
+        metrics(r) {
+          return [
+            { label: "Base total spending", value: fmtMoney(r.baseTotal) },
+            { label: "After-shock spending", value: fmtMoney(r.afterTotal) },
+            { label: "After-shock balance", value: fmtMoney(r.afterBalance) }
+          ];
+        },
+        badges(r) {
+          const out = [];
+          out.push(r.afterBalance < 0
+            ? { text: "Budget deficit", kind: "red" }
+            : { text: "Budget still positive", kind: "green" });
+          out.push(r.stressRatio >= 90
+            ? { text: "High budget stress", kind: "gold" }
+            : { text: "Moderate budget load", kind: "blue" });
+          return out;
+        },
+        story(r) {
+          return r.afterBalance < 0
+            ? `This household falls into deficit after the shock. In real life, that usually means cutting spending, borrowing, delaying payments, or leaning on family support.`
+            : `The household still stays above zero after the shock, but the margin is thinner. That makes the budget more fragile if another price increase appears.`;
+        },
+        insights(r) {
+          return [
+            `Base spending is about ${fmtMoney(r.baseTotal)} against income of ${fmtMoney(state.budgetIncome)}.`,
+            `After the shock, monthly spending rises to about ${fmtMoney(r.afterTotal)}, leaving a balance of ${fmtMoney(r.afterBalance)}.`,
+            `The household is using roughly ${fmtPct(r.stressRatio)} of monthly income after the shock.`
+          ];
+        },
+        chart(r) {
+          drawBarChart(
+            ["Income", "Base spending", "After shock", "After balance"],
+            [state.budgetIncome, r.baseTotal, r.afterTotal, r.afterBalance],
+            ["#2563eb", "#22c55e", "#ef4444", "#8b5cf6"],
+            "GH₵"
+          );
+        },
+        note: "This module is highly relatable because it turns macro pressure into everyday household trade-offs."
+      },
+
+      tax: {
+        label: "VAT / Tax Impact",
+        intro: "See how VAT and levies change the final consumer price.",
+        controls: [
+          { key: "basePrice", label: "Base price of item", min: 10, max: 1000, step: 5, type: "money" },
+          { key: "vatRate", label: "VAT rate", min: 0, max: 25, step: 0.5, type: "percent" },
+          { key: "levyRate", label: "Other levy / markup", min: 0, max: 15, step: 0.5, type: "percent" }
+        ],
+        compute(s) {
+          const vatAmount = s.basePrice * (s.vatRate / 100);
+          const levyAmount = s.basePrice * (s.levyRate / 100);
+          const finalPrice = s.basePrice + vatAmount + levyAmount;
+          const risePct = ((finalPrice - s.basePrice) / s.basePrice) * 100;
+          return {
+            vatAmount,
+            levyAmount,
+            finalPrice,
+            risePct
+          };
+        },
+        metrics(r) {
+          return [
+            { label: "VAT amount", value: fmtMoney(r.vatAmount) },
+            { label: "Levy amount", value: fmtMoney(r.levyAmount) },
+            { label: "Final price", value: fmtMoney(r.finalPrice) }
+          ];
+        },
+        badges(r) {
+          const out = [];
+          out.push(r.risePct >= 15
+            ? { text: "Noticeable price jump", kind: "red" }
+            : { text: "Mild tax burden", kind: "green" });
+          out.push({ text: "Consumer pays total tax", kind: "gold" });
+          return out;
+        },
+        story(r) {
+          return `Taxes and levies raise the final price even when the producer’s base price does not change. Consumers mostly notice the combined price, not the separate components.`;
+        },
+        insights(r) {
+          return [
+            `A base item price of ${fmtMoney(state.basePrice)} becomes ${fmtMoney(r.finalPrice)} after VAT and levies.`,
+            `VAT contributes ${fmtMoney(r.vatAmount)} while the extra levy adds ${fmtMoney(r.levyAmount)}.`,
+            `That is a total price increase of ${fmtPct(r.risePct)} on the original item.`
+          ];
+        },
+        chart(r) {
+          drawBarChart(
+            ["Base price", "VAT", "Levy", "Final price"],
+            [state.basePrice, r.vatAmount, r.levyAmount, r.finalPrice],
+            ["#2563eb", "#f59e0b", "#8b5cf6", "#ef4444"],
+            "GH₵"
+          );
+        },
+        note: "Useful for fiscal policy intuition and everyday price effects."
+      },
+
+      policy: {
+        label: "Monetary Policy",
+        intro: "Look at the gap between the policy rate and inflation, and what that can mean for borrowers and savers.",
+        controls: [
+          { key: "policyRate", label: "Policy rate", min: 5, max: 40, step: 0.5, type: "percent" },
+          { key: "inflationNow", label: "Current inflation", min: 0, max: 35, step: 0.5, type: "percent" },
+          { key: "loanAmount", label: "Loan amount", min: 1000, max: 50000, step: 500, type: "money" },
+          { key: "savingsAmount", label: "Savings amount", min: 1000, max: 50000, step: 500, type: "money" }
+        ],
+        compute(s) {
+          const realRate = s.policyRate - s.inflationNow;
+          const annualLoanCost = s.loanAmount * (s.policyRate / 100);
+          const realSavingsEffect = s.savingsAmount * (realRate / 100);
+          return {
+            realRate,
+            annualLoanCost,
+            realSavingsEffect
+          };
+        },
+        metrics(r) {
+          return [
+            { label: "Real rate gap", value: fmtPct(r.realRate) },
+            { label: "Annual loan cost", value: fmtMoney(r.annualLoanCost) },
+            { label: "Real savings effect", value: fmtMoney(r.realSavingsEffect) }
+          ];
+        },
+        badges(r) {
+          const out = [];
+          out.push(r.realRate >= 0
+            ? { text: "Positive real rate", kind: "green" }
+            : { text: "Negative real rate", kind: "red" });
+          out.push(state.policyRate >= 25
+            ? { text: "Tight policy stance", kind: "gold" }
+            : { text: "Less aggressive stance", kind: "blue" });
+          return out;
+        },
+        story(r) {
+          return r.realRate >= 0
+            ? `A policy rate above inflation usually signals a tighter stance. Borrowing becomes more expensive, but savers are less punished in real terms.`
+            : `If inflation is above the policy rate, real returns can still stay weak. Borrowing may feel cheaper in real terms, but inflation control is harder.`;
+        },
+        insights(r) {
+          return [
+            `With a policy rate of ${fmtPct(state.policyRate)} and inflation at ${fmtPct(state.inflationNow)}, the real rate is ${fmtPct(r.realRate)}.`,
+            `A loan of ${fmtMoney(state.loanAmount)} implies roughly ${fmtMoney(r.annualLoanCost)} in annual interest at this rate.`,
+            r.realSavingsEffect >= 0
+              ? `Savings of ${fmtMoney(state.savingsAmount)} gain about ${fmtMoney(r.realSavingsEffect)} in real terms.`
+              : `Savings of ${fmtMoney(state.savingsAmount)} lose about ${fmtMoney(Math.abs(r.realSavingsEffect))} in real terms.`
+          ];
+        },
+        chart(r) {
+          drawBarChart(
+            ["Policy rate", "Inflation", "Real rate", "Loan cost / 1000"],
+            [state.policyRate, state.inflationNow, r.realRate, r.annualLoanCost / 1000],
+            ["#2563eb", "#ef4444", "#22c55e", "#8b5cf6"],
+            null
+          );
+        },
+        note: "A clean way to link Bank of Ghana style policy changes to real life outcomes."
+      }
+    };
+
+    const presets = {
+      studentAccra: {
+        label: "Student in Accra",
+        apply() {
+          Object.assign(state, {
+            inflationRate: 17,
+            wageGrowth: 4,
+            nominalIncome: 2500,
+            basketCost: 1300,
+            depreciationRate: 18,
+            importShare: 50,
+            passThrough: 60,
+            importBasket: 900,
+            fuelJump: 16,
+            fareSensitivity: 70,
+            foodTransportWeight: 35,
+            monthlyTransportSpend: 450,
+            monthlyFoodSpend: 850,
+            budgetIncome: 2500,
+            rent: 850,
+            food: 850,
+            transport: 450,
+            utilities: 180,
+            school: 250,
+            costShock: 14
+          });
+        }
+      },
+      highInflation: {
+        label: "High inflation year",
+        apply() {
+          Object.assign(state, {
+            inflationRate: 29,
+            wageGrowth: 10,
+            nominalIncome: 3500,
+            basketCost: 1500,
+            costShock: 24,
+            inflationNow: 28,
+            policyRate: 30
+          });
+        }
+      },
+      cediShock: {
+        label: "Cedi weakens sharply",
+        apply() {
+          Object.assign(state, {
+            baseExchangeRate: 15.5,
+            depreciationRate: 32,
+            importShare: 65,
+            passThrough: 78,
+            importBasket: 1200
+          });
+        }
+      },
+      fuelShock: {
+        label: "Fuel price jump",
+        apply() {
+          Object.assign(state, {
+            fuelJump: 30,
+            fareSensitivity: 74,
+            foodTransportWeight: 50,
+            monthlyTransportSpend: 500,
+            monthlyFoodSpend: 1000
+          });
+        }
+      },
+      vatShock: {
+        label: "VAT / levy pressure",
+        apply() {
+          Object.assign(state, {
+            basePrice: 120,
+            vatRate: 15,
+            levyRate: 5
+          });
+        }
+      },
+      stable: {
+        label: "More stable scenario",
+        apply() {
+          Object.assign(state, {
+            inflationRate: 10,
+            wageGrowth: 12,
+            nominalIncome: 3200,
+            basketCost: 1400,
+            depreciationRate: 8,
+            importShare: 42,
+            passThrough: 45,
+            importBasket: 1000,
+            fuelJump: 8,
+            fareSensitivity: 45,
+            foodTransportWeight: 25,
+            monthlyTransportSpend: 380,
+            monthlyFoodSpend: 850,
+            budgetIncome: 3200,
+            rent: 950,
+            food: 850,
+            transport: 380,
+            utilities: 220,
+            school: 300,
+            costShock: 8,
+            basePrice: 100,
+            vatRate: 15,
+            levyRate: 2,
+            policyRate: 22,
+            inflationNow: 12
+          });
+        }
+      }
+    };
+
+    const tabsEl = document.getElementById("tabs");
+    const presetsEl = document.getElementById("presets");
+    const controlsEl = document.getElementById("controls");
+    const controlsIntroEl = document.getElementById("controlsIntro");
+    const moduleTitleEl = document.getElementById("moduleTitle");
+    const moduleNoteEl = document.getElementById("moduleNote");
+    const badgesEl = document.getElementById("badges");
+    const metricsEl = document.getElementById("metrics");
+    const insightsEl = document.getElementById("insights");
+    const storyEl = document.getElementById("story");
+    const canvas = document.getElementById("chart");
+    const ctx = canvas.getContext("2d");
+
+    function fmtMoney(v) {
+      return money.format(v);
+    }
+
+    function fmtPct(v) {
+      return `${Number(v).toFixed(1)}%`;
+    }
+
+    function fmtControlValue(control, value) {
+      if (control.type === "money") return fmtMoney(value);
+      if (control.type === "percent") return fmtPct(value);
+      if (control.key === "baseExchangeRate") return `${value.toFixed(1)} GH₵/$`;
+      return Number(value).toFixed(control.step < 1 ? 1 : 0);
+    }
+
+    function renderTabs() {
+      tabsEl.innerHTML = "";
+      Object.entries(modules).forEach(([key, mod]) => {
+        const btn = document.createElement("button");
+        btn.className = `tab ${state.currentModule === key ? "active" : ""}`;
+        btn.textContent = mod.label;
+        btn.onclick = () => {
+          state.currentModule = key;
+          renderAll();
+        };
+        tabsEl.appendChild(btn);
+      });
+    }
+
+    function renderPresets() {
+      presetsEl.innerHTML = "";
+      Object.entries(presets).forEach(([key, preset]) => {
+        const btn = document.createElement("button");
+        btn.className = "preset";
+        btn.textContent = preset.label;
+        btn.onclick = () => {
+          preset.apply();
+          renderAll();
+        };
+        presetsEl.appendChild(btn);
+      });
+    }
+
+    function renderControls() {
+      const module = modules[state.currentModule];
+      controlsIntroEl.textContent = module.intro;
+      controlsEl.innerHTML = "";
+
+      module.controls.forEach((control) => {
+        const wrap = document.createElement("div");
+        wrap.className = "control";
+
+        const top = document.createElement("div");
+        top.className = "control-top";
+
+        const label = document.createElement("label");
+        label.setAttribute("for", control.key);
+        label.textContent = control.label;
+
+        const value = document.createElement("div");
+        value.className = "control-value";
+        value.id = `${control.key}-value`;
+        value.textContent = fmtControlValue(control, state[control.key]);
+
+        top.appendChild(label);
+        top.appendChild(value);
+
+        const input = document.createElement("input");
+        input.type = "range";
+        input.id = control.key;
+        input.min = control.min;
+        input.max = control.max;
+        input.step = control.step;
+        input.value = state[control.key];
+        input.oninput = (e) => {
+          state[control.key] = Number(e.target.value);
+          document.getElementById(`${control.key}-value`).textContent = fmtControlValue(control, state[control.key]);
+          renderModule();
+        };
+
+        wrap.appendChild(top);
+        wrap.appendChild(input);
+        controlsEl.appendChild(wrap);
+      });
+    }
+
+    function renderModule() {
+      const module = modules[state.currentModule];
+      const results = module.compute(state);
+
+      moduleTitleEl.textContent = module.label;
+      moduleNoteEl.textContent = module.note;
+
+      badgesEl.innerHTML = "";
+      module.badges(results).forEach((b) => {
+        const badge = document.createElement("div");
+        badge.className = `badge ${b.kind}`;
+        badge.textContent = b.text;
+        badgesEl.appendChild(badge);
+      });
+
+      metricsEl.innerHTML = "";
+      module.metrics(results).forEach((m) => {
+        const card = document.createElement("div");
+        card.className = "metric";
+        card.innerHTML = `
+          <div class="metric-label">${m.label}</div>
+          <div class="metric-value">${m.value}</div>
+        `;
+        metricsEl.appendChild(card);
+      });
+
+      insightsEl.innerHTML = "";
+      module.insights(results).forEach((text) => {
+        const li = document.createElement("li");
+        li.className = "insight-item";
+        li.textContent = text;
+        insightsEl.appendChild(li);
+      });
+
+      storyEl.textContent = module.story(results);
+      module.chart(results);
+    }
+
+    function renderAll() {
+      renderTabs();
+      renderPresets();
+      renderControls();
+      renderModule();
+    }
+
+    function clearCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawBarChart(labels, values, colors, suffix) {
+      clearCanvas();
+
+      const W = canvas.width;
+      const H = canvas.height;
+      const m = { top: 28, right: 28, bottom: 74, left: 70 };
+      const chartW = W - m.left - m.right;
+      const chartH = H - m.top - m.bottom;
+
+      const minVal = Math.min(0, ...values);
+      const maxVal = Math.max(0, ...values);
+      const span = maxVal - minVal || 1;
+
+      function yScale(v) {
+        return m.top + ((maxVal - v) / span) * chartH;
+      }
+
+      const zeroY = yScale(0);
+
+      ctx.strokeStyle = "#dbe5f0";
+      ctx.lineWidth = 1;
+      ctx.font = "12px Arial";
+      ctx.fillStyle = "#334155";
+
+      for (let i = 0; i <= 5; i++) {
+        const v = minVal + (span * i) / 5;
+        const y = yScale(v);
+
+        ctx.beginPath();
+        ctx.moveTo(m.left, y);
+        ctx.lineTo(W - m.right, y);
+        ctx.stroke();
+
+        let label;
+        if (suffix === "GH₵") {
+          label = `${Math.round(v)}`;
+        } else {
+          label = Number(v).toFixed(1);
+        }
+        ctx.fillText(label, 12, y + 4);
+      }
+
+      ctx.strokeStyle = "#111827";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(m.left, zeroY);
+      ctx.lineTo(W - m.right, zeroY);
+      ctx.stroke();
+
+      const barGap = 28;
+      const barWidth = (chartW - barGap * (labels.length - 1)) / labels.length;
+
+      labels.forEach((label, i) => {
+        const x = m.left + i * (barWidth + barGap);
+        const y = yScale(values[i]);
+        const height = Math.abs(zeroY - y);
+
+        ctx.fillStyle = colors[i] || "#2563eb";
+        ctx.fillRect(x, Math.min(y, zeroY), barWidth, Math.max(height, 2));
+
+        ctx.fillStyle = "#111827";
+        ctx.font = "12px Arial";
+        ctx.textAlign = "center";
+
+        const valueText = suffix === "GH₵"
+          ? `${Math.round(values[i])}`
+          : values[i].toFixed(1);
+
+        ctx.fillText(valueText, x + barWidth / 2, Math.min(y, zeroY) - 8);
+        ctx.fillText(label, x + barWidth / 2, H - 34);
+      });
+
+      ctx.textAlign = "left";
+      ctx.fillStyle = "#111827";
+      ctx.font = "bold 14px Arial";
+      ctx.fillText("Scenario chart", m.left, 18);
+    }
+
+    renderAll();
+  </script>
 </body>
 </html>
