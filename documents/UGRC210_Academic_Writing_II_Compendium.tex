@@ -1,0 +1,476 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.2cm, right=2.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage[english]{babel}
+
+\babelfont{rm}{Noto Sans}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em, itemsep=3pt, topsep=3pt}
+\setlist[enumerate]{leftmargin=1.5em, itemsep=3pt, topsep=3pt}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{mdframed}
+\usepackage{parskip}
+\usepackage{hyperref}
+
+\definecolor{primaryblue}{RGB}{30, 58, 138}
+\definecolor{secondaryblue}{RGB}{67, 56, 202}
+\definecolor{bglight}{RGB}{248, 250, 252}
+\definecolor{bordergrey}{RGB}{226, 232, 240}
+\definecolor{correctgreen}{RGB}{22, 101, 52}
+\definecolor{incorrectred}{RGB}{153, 27, 27}
+
+\mdfdefinestyle{summarybox}{
+  backgroundcolor=bglight,
+  linecolor=secondaryblue,
+  linewidth=1.5pt,
+  topline=false,
+  rightline=false,
+  bottomline=false,
+  innerleftmargin=12pt,
+  innerrightmargin=12pt,
+  innertopmargin=8pt,
+  innerbottommargin=8pt
+}
+
+\mdfdefinestyle{correctbox}{
+  backgroundcolor=bglight,
+  linecolor=correctgreen,
+  linewidth=1.5pt,
+  topline=false,
+  rightline=false,
+  bottomline=false,
+  innerleftmargin=10pt,
+  innerrightmargin=10pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt
+}
+
+\mdfdefinestyle{incorrectbox}{
+  backgroundcolor=bglight,
+  linecolor=incorrectred,
+  linewidth=1.5pt,
+  topline=false,
+  rightline=false,
+  bottomline=false,
+  innerleftmargin=10pt,
+  innerrightmargin=10pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt
+}
+
+\titleformat{\section}{\large\bfseries\color{primaryblue}}{\thesection.}{0.8em}{}[\titlerule]
+\titleformat{\subsection}{\normalfont\bfseries\color{secondaryblue}}{\thesubsection.}{0.6em}{}
+\titleformat{\subsubsection}{\normalfont\bfseries}{\thesubsubsection.}{0.5em}{}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=secondaryblue,
+    urlcolor=secondaryblue
+}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{UNIVERSITY OF GHANA}}\\[3pt]
+    {\large College of Humanities • Language Centre}\\[6pt]
+    {\Large \textbf{\color{primaryblue}UGRC 210: ACADEMIC WRITING II}}\\[4pt]
+    {\textbf{Consolidated Master Course Compendium \& Syllabus Material}}\\[2pt]
+    \rule{\linewidth}{1pt}
+\end{center}
+
+\tableofcontents
+\vspace{1em}
+\newpage
+
+\section{Module 1: Grammar \& Usage --- Deviant Usage and Common Errors}
+
+\textbf{Deviant Usage} refers to the use of words and expressions that depart from accepted academic grammatical standards. When wrong usages become persistent, the quality and credibility of academic writing suffer.
+
+\subsection{Misplaced Modifiers}
+A misplaced modifier is a word, phrase, or clause improperly separated from the word it modifies or describes.
+\begin{itemize}
+    \item \textbf{Misplaced Adjectives:} Incorrectly separated from the nouns they modify.
+    \begin{mdframed}[style=incorrectbox]
+        \textbf{Incorrect:} On her way home, Akosua found a gold man's watch. (\textit{Implies the man is made of gold.})
+    \end{mdframed}
+    \begin{mdframed}[style=correctbox]
+        \textbf{Correct:} On her way home, Akosua found a man's gold watch.
+    \end{mdframed}
+    
+    \item \textbf{Misplaced Adverbs:} Adverbs placed incorrectly can distort sentence meaning. Pay close attention to words like \textit{only, just, nearly,} and \textit{almost}.
+    \begin{mdframed}[style=incorrectbox]
+        \textbf{Incorrect:} We ate the lunch that we bought slowly.
+    \end{mdframed}
+    \begin{mdframed}[style=correctbox]
+        \textbf{Correct:} We slowly ate the lunch that we bought.
+    \end{mdframed}
+
+    \item \textbf{Misplaced Phrases:}
+    \begin{mdframed}[style=incorrectbox]
+        \textbf{Incorrect:} Adwoa sold the food to the customer with fresh meat.
+    \end{mdframed}
+    \begin{mdframed}[style=correctbox]
+        \textbf{Correct:} Adwoa sold the food with fresh meat to the customer.
+    \end{mdframed}
+\end{itemize}
+
+\subsection{Dangling Modifiers}
+A dangling modifier occurs when the intended subject being modified is missing entirely from the sentence or clause.
+
+\textbf{Correction Methods:}
+\begin{enumerate}
+    \item \textbf{Method 1:} Keep the modifier phrase as it is, but change the main clause so it begins with the actual subject modified.
+    \item \textbf{Method 2:} Convert the dangling modifier phrase into a subordinate clause containing its own subject and verb.
+\end{enumerate}
+
+\begin{mdframed}[style=incorrectbox]
+    \textbf{Incorrect:} Walking to the movies, the cloudburst drenched Jim.
+\end{mdframed}
+\begin{mdframed}[style=correctbox]
+    \textbf{Correct (Method 1):} Walking to the movies, Jim was drenched by the cloudburst.\\
+    \textbf{Correct (Method 2):} While Jim was walking to the movies, the cloudburst drenched him.
+\end{mdframed}
+
+\subsection{Comma Splices \& Split Infinitives}
+
+\subsubsection{Comma Splice}
+Occurs when two independent clauses are improperly joined with only a comma.
+\begin{mdframed}[style=incorrectbox]
+    \textbf{Incorrect:} The internet has made the world smaller, you can meet people everywhere.
+\end{mdframed}
+\textbf{Revision Strategies:}
+\begin{enumerate}[label=\alph*)]
+    \item Add a coordinating conjunction (\textit{for, and, nor, but, or, yet, so}): \textit{...smaller, so you can meet...}
+    \item Use a semicolon: \textit{...smaller; you can meet...}
+    \item Separate into two independent sentences: \textit{...smaller. You can meet...}
+\end{enumerate}
+
+\subsubsection{Split Infinitive}
+Occurs when adverbs or other words divide the particle \texttt{to} from the base verb.
+\begin{mdframed}[style=incorrectbox]
+    \textbf{Incorrect:} Kwame's teacher told him to never look back.
+\end{mdframed}
+\begin{mdframed}[style=correctbox]
+    \textbf{Correct:} Kwame's teacher told him never to look back.
+\end{mdframed}
+
+\subsection{Clear Pronoun Reference \& Pronoun-Antecedent Agreement}
+A pronoun must refer clearly to one unmistakable noun that precedes it (the antecedent).
+
+\textbf{Major Pronoun Reference Errors:}
+\begin{itemize}
+    \item \textbf{Too Many Antecedents:} \textit{Take the radio out of the car and fix it.} (\textit{Fix the car or the radio?}) $\rightarrow$ \textit{Take the radio out of the car and fix the radio.}
+    \item \textbf{Hidden Antecedents:} Antecedent functions as an adjective rather than a noun. (\textit{The fufu dish was empty, but we were tired of eating it.}) $\rightarrow$ (\textit{...tired of eating fufu.})
+    \item \textbf{Loose Antecedents:} Pronouns like \textit{this, that, it, which} referring loosely to a general concept rather than a specific noun.
+\end{itemize}
+
+\subsection{Rambling Sentences \& Double Subjects}
+\begin{itemize}
+    \item \textbf{Rambling Sentences:} Overly long sentences containing excessive clauses joined repeatedly by coordinating conjunctions (\textit{and, so, but}).
+    \item \textbf{Double Subjects:} Repeating a noun subject with an unnecessary pronoun immediately after.
+    \begin{mdframed}[style=incorrectbox]
+        \textbf{Incorrect:} My hometown it is very big. / My sister she is a nurse.
+    \end{mdframed}
+    \begin{mdframed}[style=correctbox]
+        \textbf{Correct:} My hometown is very big. / My sister is a nurse.
+    \end{mdframed}
+\end{itemize}
+
+\subsection{Subject-Verb Agreement Rules}
+\begin{enumerate}
+    \item \textbf{Singular Subjects:} Require singular verbs (\textit{The cat plays}).
+    \item \textbf{Plural \& Compound Subjects:} Joined by \texttt{and} require plural verbs (\textit{A dog and a cat are...}).
+    \item \textbf{Disjunctive Compounds (\textit{or, nor, neither...nor}):} Verb agrees with the subject closer to it (\textit{Neither the windows nor the door needs painting}).
+    \item \textbf{Intervening Phrases:} Words like \textit{along with, as well as, in addition to} do not alter subject number (\textit{The doctor in addition to his nurses has the night off}).
+    \item \textbf{Collective Nouns:} Singular when acting as a unit (\textit{The congregation is...}); Plural for items like \textit{scissors, trousers} unless preceded by \textit{"pair of"}.
+    \item \textbf{Indefinite Pronouns:} Words like \textit{everyone, everybody, each, neither, somebody} take singular verbs.
+\end{enumerate}
+
+\subsection{Parallel Structure (Parallelism)}
+Elements in a series or joined by conjunctions must match in grammatical form.
+\begin{itemize}
+    \item \textbf{Coordinating Conjunctions:} \textit{Selasi enjoys dancing, swimming, and shopping} (not \textit{going to the mall}).
+    \item \textbf{Correlative Conjunctions (\textit{not only...but also}):} \textit{Selasi is not only very beautiful but also very intelligent}.
+\end{itemize}
+
+\subsection{Commonly Confused Words Matrix}
+\begin{table}[htbp]
+\centering
+\small
+\caption{Confusing Words Summary Table}
+\begin{tabular}{llp{8.5cm}}
+\toprule
+\textbf{Word Pair} & \textbf{Part of Speech} & \textbf{Core Meaning / Academic Distinction} \\
+\midrule
+Accept / Except & Verb / Prep & Accept = receive; Except = exclude. \\
+Affect / Effect & Verb / Noun & Affect = to influence; Effect = result / outcome. \\
+Farther / Further & Adj / Adv & Farther = physical distance; Further = depth, degree, or quantity. \\
+Fewer / Less & Quantifiers & Fewer = countable items; Less = uncountable mass items. \\
+Who's / Whose & Contraction / Poss. & Who's = who is; Whose = possessive pronoun. \\
+Your / You're & Poss. / Contraction & Your = belonging to you; You're = you are. \\
+Loose / Lose & Adj / Verb & Loose = not tight; Lose = to misplace or suffer defeat. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+
+\section{Module 2: Note-Taking vs. Note-Making}
+
+\subsection{Distinction Between Note-Taking and Note-Making}
+\begin{table}[htbp]
+\centering
+\small
+\caption{Note-Taking vs. Note-Making}
+\begin{tabular}{p{7.5cm}p{7.5cm}}
+\toprule
+\textbf{Note-Taking} & \textbf{Note-Making} \\
+\midrule
+• Done live during lectures, seminars, or fieldwork. & • Done from written materials (textbooks, journals). \\
+• Passive, fast-paced, and chronological recording. & • Active, selective, and highly reflective process. \\
+• Focuses on capturing speaker statements verbatim/near-verbatim. & • Focuses on synthesis, structure, and individual phrasing. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Benefits and Characteristics of Effective Notes}
+\begin{itemize}
+    \item \textbf{Why Make Notes?} Helps process complex academic texts, improves long-term recall, creates personal study aids, and synthesizes sources for essay drafts.
+    \item \textbf{Characteristics of Good Notes:} Organized by main ideas vs. supporting details; uses bullet points, hierarchy, visual emphasis (highlighting, underlining), standard symbols ($\rightarrow, \therefore, \because, =$), and personal abbreviations.
+\end{itemize}
+
+\subsection{The 3-Step Note-Making Procedure}
+\begin{enumerate}
+    \item \textbf{Step 1: Previewing:} Scan titles, subheadings, abstracts, chapter intros, and conclusions to map out overall structure.
+    \item \textbf{Step 2: Marking Important Items:} Read attentively to underline keywords, definitions, major claims, and core examples.
+    \item \textbf{Step 3: Writing Key Issues:} Record information via \textbf{Summarising} (condensing) and \textbf{Paraphrasing} (restating in own words).
+\end{enumerate}
+
+\newpage
+
+\section{Module 3: Summary Writing}
+
+\subsection{Definition and Purpose}
+A summary is a condensed, faithful restatement of an original text's essential points written entirely in the reader's own words.
+
+\subsection{Three Core Features of a Good Summary}
+\begin{mdframed}[style=summarybox]
+    \begin{enumerate}
+        \item \textbf{Brevity:} The primary requirement. A summary is typically \textbf{1/3 to 1/4} the length of the source, stripped of extraneous examples, repetition, and minor details.
+        \item \textbf{Accuracy:} Faithfully presents the original author's exact meaning and context without distortion.
+        \item \textbf{Objectivity:} Contains strictly the source author's ideas. Excludes reader opinions, value judgments, or personal interpretations.
+    \end{enumerate}
+\end{mdframed}
+
+\subsection{The 3-Phase Process of Writing a Summary}
+\begin{itemize}
+    \item \textbf{Phase 1: Preparation:}
+    \begin{enumerate}[label=\arabic*.]
+        \item Preview text for global theme.
+        \item Read thoroughly for complete comprehension.
+        \item Divide text into coherent sub-sections and label each section.
+        \item Draft a one-sentence summary for each section.
+    \end{enumerate}
+    \item \textbf{Phase 2: Drafting:}
+    \begin{enumerate}[label=\arabic*.]
+        \item Formulate an overall thesis statement combining the main idea.
+        \item Connect section summary sentences using logical transition markers.
+        \item Maintain independent phrasing to prevent plagiarism.
+        \item Conclude with a clear summing-up sentence.
+    \end{enumerate}
+    \item \textbf{Phase 3: Editing:}
+    \begin{enumerate}[label=\arabic*.]
+        \item Verify that all core points are included.
+        \item Verify total elimination of personal opinions and wordiness.
+        \item Check grammar, mechanics, and citation accuracy.
+    \end{enumerate}
+\end{itemize}
+
+\newpage
+
+\section{Module 4: Paraphrasing --- Principles \& Practice}
+
+\subsection{Understanding Paraphrasing}
+Paraphrasing is restating another author's specific idea or passage in your own unique sentence structure and vocabulary. 
+Unlike a summary (which condenses long passages drastically), a paraphrase is approximately equal in length and level of detail to the original passage.
+
+\subsection{Guidelines \& The PARA Technique}
+\begin{mdframed}[style=summarybox]
+    \textbf{The PARA Technique for Paraphrasing:}
+    \begin{itemize}
+        \item \textbf{P} --- \textbf{P}ut the text into your own words completely.
+        \item \textbf{A} --- \textbf{A}void copying exact words, phrasing, or sequence.
+        \item \textbf{R} --- \textbf{R}earrange sentence structure and grammar.
+        \item \textbf{A} --- \textbf{A}sk if all key details and source citations are included accurately.
+    \end{itemize}
+\end{mdframed}
+
+\subsection{Case Study 1: Sandra Steingraber Passage (1998)}
+\textbf{Original Source Text:}
+\textit{"In 1938, in a series of now-classic experiments, exposure to synthetic dyes derived from coal and belonging to a class of chemicals called aromatic amines was shown to cause bladder cancer in dogs..."}
+
+\begin{itemize}
+    \item \textbf{Unacceptable Paraphrase (Wording Too Close):} Simply substitutes a few synonyms while retaining exact clauses and phrasing (\textit{Patchwriting}).
+    \item \textbf{Unacceptable Paraphrase (Syntax Too Close):} Changes words but follows the identical sentence sequence and grammatical structure.
+    \item \textbf{Acceptable Paraphrase:}
+    \begin{mdframed}[style=correctbox]
+        Biologist Sandra Steingraber explains that pathbreaking experiments in 1938 demonstrated that dogs exposed to aromatic amines (chemicals used in coal-derived synthetic dyes) developed cancers of the bladder that were similar to cancers common among dyers in the textile industry... (Steingraber, 1998, p. 976).
+    \end{mdframed}
+\end{itemize}
+
+\subsection{Case Study 2: Oliver Sacks Passage ("An Anthropologist on Mars")}
+\textbf{Key Criteria for Legitimate Paraphrase:}
+\begin{enumerate}
+    \item Integrates analytical attribution early in the paragraph (\textit{"In 'An Anthropologist on Mars', Sacks lists..."}).
+    \item Reorganizes single long blocks into structured logical paragraphs.
+    \item Eliminates unnecessary minor details while maintaining key data.
+    \item Provides accurate citations throughout rather than a single end citation.
+\end{enumerate}
+
+\newpage
+
+\section{Module 5: Referencing \& Quotations}
+
+\subsection{Purpose of Referencing}
+Referencing serves three core academic purposes (Bailey, 2015):
+\begin{enumerate}
+    \item Demonstrates extensive background reading and adds authority to arguments.
+    \item Enables readers to locate original sources for verification.
+    \item Prevents academic dishonesty and plagiarism.
+\end{enumerate}
+
+\subsection{Types of Direct Quotations}
+\begin{itemize}
+    \item \textbf{Nested Quotation:} A quote embedded within another quote.
+    \begin{mdframed}[style=summarybox]
+        Hoff (2014) contends that "definition by Crystal (1995) as 'systematic use...' is misleading" (p. 4).
+    \end{mdframed}
+    \item \textbf{Block Quotation:} For quotes of 4+ lines. Introduce with a preamble ending in a colon (:), indent left margin, omit quotation marks.
+    \item \textbf{Elliptical Quotation:} Using three spaced dots (\texttt{...}) to indicate omitted words without altering sentence meaning.
+    \item \textbf{Comment-Embedded Quotation:} Using square brackets (\texttt{[ ]}) to insert clarifying editor notes or grammar adjustments.
+\end{itemize}
+
+\subsection{Verbs of Reference (Reporting Verbs) Matrix}
+\begin{table}[htbp]
+\centering
+\small
+\caption{Reporting Verbs Categorization}
+\begin{tabular}{lp{10cm}}
+\toprule
+\textbf{Author Stance / Function} & \textbf{Recommended Reporting Verbs} \\
+\midrule
+Stating Facts & states, points out, maintains, declares, avers, finds. \\
+Presenting Arguments & argues, contends, posits, claims, postulates, hypothesizes. \\
+Disagreement / Reaction & refutes, disputes, doubts, accepts, concedes, denies. \\
+Emphasis & emphasizes, underscores, stresses, highlights, reiterates. \\
+Asking / Probing & asks, queries, questions, examines, probes, explores. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+
+\section{Module 6: Source Synthesis \& Cohesion}
+
+\subsection{Principles of Source Synthesis}
+Synthesis is combining findings, claims, and arguments from multiple sources into a new, coherent argument.
+
+\textbf{Steps for Body Paragraph Synthesis:}
+\begin{enumerate}
+    \item Formulate a clear topic sentence stating your analytical point.
+    \item Integrate paraphrases or short quotes from individual authors.
+    \item Highlight relationships (agreements, contrasts, methodological differences).
+    \item Provide full in-text citations for all sources.
+\end{enumerate}
+
+\subsection{Synthesis Case Study: COVID-19 Vaccine Hesitancy}
+\textbf{Integrated Synthesis Paragraph:}
+\begin{mdframed}[style=summarybox]
+    One primary concern regarding COVID-19 vaccination is efficacy in disease prevention. UNICEF (n.d.) affirms that current vaccines do not guarantee full immunity. This position is shared by the WHO (2021), which notes that transmission reduction remains under active investigation. Furthermore, public reluctance stems from distrust; while Pertiwi (2021) attributes Indonesian hesitation to pharmaceutical misconduct, Ghanaian surveys indicate distrust directed primarily toward governmental enforcement.
+\end{mdframed}
+
+\subsection{Cohesion Tools \& Devices}
+\begin{itemize}
+    \item \textbf{Reference Words:} Pronouns and demonstratives (\textit{he, she, it, former, latter, this, these}).
+    \item \textbf{Transitions Matrix:}
+    \begin{itemize}
+        \item \textit{Addition:} furthermore, moreover, in addition, additionally.
+        \item \textit{Contrast:} however, conversely, whereas, on the other hand.
+        \item \textit{Consequence / Result:} thus, therefore, consequently, hence.
+        \item \textit{Concession:} admittedly, nevertheless, despite this, although.
+    \end{itemize}
+    \item \textbf{Synonyms \& Repetition:} Strategic reuse of key technical terms or exact academic synonyms.
+\end{itemize}
+
+\newpage
+
+\section{Module 7: Visual Information in Academic Writing}
+
+\subsection{Role and Types of Visual Information}
+Visual information captures statistical trends, complex relationships, and empirical data in clear graphical formats (Tables, Line Graphs, Bar Charts, Diagrams, Maps, Photos).
+
+\subsection{Formatting Rules for Visuals}
+\begin{mdframed}[style=summarybox]
+    \begin{itemize}
+        \item \textbf{Tables:} Captions and labels are placed \textbf{ABOVE} the table (\textit{Table 1: Student Enrollment Rates}).
+        \item \textbf{Figures:} Everything non-table (charts, maps, diagrams) is labeled "Figure" and titles are placed \textbf{BELOW} the visual (\textit{Figure 1: Temperature Variations}).
+        \item \textbf{In-Text Reference:} Always refer to visual numbers directly in narrative text and explain their analytical significance.
+        \item \textbf{Source Attribution:} Always cite original data sources directly beneath the visual element.
+    \end{itemize}
+\end{mdframed}
+
+\newpage
+
+\section{Module 8: Academic Writing Models --- Reports vs. Essays}
+
+\subsection{Comparative Analysis: Reports vs. Essays}
+\begin{table}[htbp]
+\centering
+\small
+\caption{Essays vs. Reports Comparison}
+\begin{tabular}{p{7.5cm}p{7.5cm}}
+\toprule
+\textbf{Essays} & \textbf{Reports} \\
+\midrule
+• Primary focus on reasoning, argument, and secondary literature. & • Primary focus on presenting empirical data, experiments, or surveys. \\
+• Continuous narrative structure using linked paragraphs. & • Divided into numbered sections and descriptive subheadings. \\
+• Uses mostly library and journal sources. & • Relies heavily on primary data collection and practical observations. \\
+• Concludes with summary of argument. & • Concludes with actionable recommendations and appendices. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Structural Formats}
+
+\subsubsection{Scientific Report Structure (IMRaD)}
+\begin{enumerate}
+    \item \textbf{Title \& Abstract:} Concise overview of research problem, methods, key results, and conclusion.
+    \item \textbf{Introduction:} Background literature review, study rationale, and hypotheses.
+    \item \textbf{Methods:} Detailed description of tools, procedures, sample sizes, and materials.
+    \item \textbf{Results:} Presentation of raw findings supported by tables and figures.
+    \item \textbf{Discussion \& Conclusion:} Interpretation of results, study limitations, practical significance, and future research directions.
+\end{enumerate}
+
+\subsubsection{Long Essay Structure (2,500--5,000 words)}
+\begin{enumerate}
+    \item Title Page
+    \item Table of Contents \& List of Tables/Figures
+    \item Introduction \& Thesis Statement
+    \item Main Body Paragraphs (Synthesized thematic analysis)
+    \item Conclusion, Reference List, and Appendices
+\end{enumerate}
+
+\subsection{Survey \& Questionnaire Design Rules}
+\begin{itemize}
+    \item Keep questionnaires concise (1--2 minutes completion time).
+    \item Use clear, simple, and non-personal questions.
+    \item Combine closed questions (easy quantification) with open questions (deeper insights).
+    \item Always pilot test questionnaires with peer samples prior to full rollout.
+\end{itemize}
+
+\end{document}
